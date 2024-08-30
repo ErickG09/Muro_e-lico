@@ -1,4 +1,3 @@
-// components/CardsContainer.js
 import { Flex } from '@chakra-ui/react';
 import PropellerCard from './PropellerCard';
 

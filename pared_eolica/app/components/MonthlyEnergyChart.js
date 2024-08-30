@@ -29,7 +29,6 @@ const MonthlyEnergyChart = () => {
       },
     ],
   };
-
   const options = {
     responsive: true,
     plugins: {
@@ -40,13 +39,12 @@ const MonthlyEnergyChart = () => {
         display: true,
         text: 'Energía Generada por Mes',
         color: 'bold'
-        
       },
     },
   };
 
   return (
-    <Box width="50%" marginLeft="0">
+    <Box width="50%">
       <Bar data={data} options={options} />
     </Box>
   );

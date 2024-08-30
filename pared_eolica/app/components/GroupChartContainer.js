@@ -6,8 +6,8 @@ const GroupChartContainer = () => {
   return (
     <Flex
       width="40%"
-      backgroundColor="#F7F8FA"
-      padding="20px"
+      backgroundColor="#E9ECEF"
+      padding="40px"
       borderRadius="15px"
       alignItems="center"
       justifyContent="space-between"

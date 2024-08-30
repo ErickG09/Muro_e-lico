@@ -10,7 +10,7 @@ const GroupLegend = () => {
   return (
     <Box>
       {groups.map((group, index) => (
-        <Flex key={index} align="center" marginBottom="10px">
+        <Flex key={index} align="center" marginBottom="20px">
           <Box
             width="12px"
             height="12px"
