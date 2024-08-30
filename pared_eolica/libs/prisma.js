@@ -8,10 +8,12 @@ if (process.env.NODE_ENV === "development") {
     }
 
     prisma = global.prisma;
-}
-
-if (process.env.NODE_ENV === "production") {
+}else if (process.env.NODE_ENV === "production") {
+    prisma = new PrismaClient();
+}else {
     prisma = new PrismaClient();
 }
+
+
 
 export default prisma;
