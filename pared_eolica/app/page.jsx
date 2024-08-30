@@ -1,27 +1,34 @@
+"use client";
+
 import Image from "next/image";
 import { 
   ChakraProvider, 
-  Button, 
-  ButtonGroup,
-  CircularProgress,
-  CircularProgressLabel,
-  Flex 
+  Flex,
+  Heading
 } from '@chakra-ui/react'
+import Button from "./components/button";
+import CardsContainer from "./components/CardsContainer";
+import MonthlyEnergyChart from "./components/MonthlyEnergyChart";
+import GroupChartContainer from "./components/GroupChartContainer";
 
 export default function Home() {
   return (
     
     <ChakraProvider>
-
-      <h1>Hola</h1>
-      <Flex direction='row'>
-        <Button colorScheme="blue">Button</Button>
-
-        <CircularProgress value={40} color='green.400'>
-          <CircularProgressLabel>40%</CircularProgressLabel>
-        </CircularProgress>
+      <Flex direction="column" align="center" justify="" height="100vh" padding="20px">
+        <Flex width="90%" justify="space-between" align="center" marginBottom="30px">
+          <Heading size="lg">Página web de pared eólica</Heading>
+          <Button onClick={() => alert('Button clicked!')}>
+            Historial
+          </Button>
+        </Flex>
+        <CardsContainer />
+        <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
+          <MonthlyEnergyChart />
+          <GroupChartContainer />
+        </Flex>
+        
       </Flex>
-
     </ChakraProvider>
   );
 }
