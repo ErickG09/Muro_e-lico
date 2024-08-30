@@ -7,7 +7,7 @@ import {
   Flex,
   Heading
 } from '@chakra-ui/react'
-import Button from "./components/Button";
+import Button from './components/Button';
 import CardsContainer from "./components/CardsContainer";
 import MonthlyEnergyChart from "./components/MonthlyEnergyChart";
 import GroupChartContainer from "./components/GroupChartContainer";
