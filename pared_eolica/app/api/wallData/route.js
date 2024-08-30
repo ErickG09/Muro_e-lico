@@ -22,6 +22,6 @@ export async function POST(request) {
 
 export async function GET() {
     await connectMongoDB();
-    const data = await WallData.find( {}, { _id: 0, __v: 0 } );
-    return NextResponse.json(data, {status: 200});
+    const walldatas = await WallData.find( {}, { _id: 0, __v: 0 } );
+    return NextResponse.json(walldatas);
 }
