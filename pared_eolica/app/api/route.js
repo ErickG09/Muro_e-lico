@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import prisma from "@/libs/prisma";
-
 
 import { PrismaClient } from '@prisma/client';
 
