@@ -25,17 +25,7 @@ export async function POST(request) {
 }
 
 export async function GET() {
-    try {
-      const data = await prisma.propellerData.findMany({
-        orderBy: {
-          createdAt: "desc",
-        },
-      });
-  
-      return NextResponse.json({ data });
-    } catch (error) {
-      console.error(error);
+    const data = await prisma.propellerData.findMany();
 
-      return NextResponse.json({ message: "Error getting data" }, { status: 500 });
-    }
+    return NextResponse.json({ data });
 }
