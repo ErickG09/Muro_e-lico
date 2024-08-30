@@ -17,7 +17,7 @@ const GroupPieChart = () => {
     datasets: [
       {
         label: 'Grupos',
-        data: [30, 40, 30], 
+        data: [30,30,40], 
         backgroundColor: ['#FF6384', '#FF9F40', '#36A2EB'],
         hoverBackgroundColor: ['#FF6384', '#FF9F40', '#36A2EB'],
       },
