@@ -19,3 +19,9 @@ export async function POST(request) {
      });
      return NextResponse.json({message: "Data saved"}, {status: 201});
 }
+
+export async function GET() {
+    await connectMongoDB();
+    const data = await WallData.find( {}, { _id: 0, __v: 0 } );
+    return NextResponse.json(data, {status: 200});
+}
