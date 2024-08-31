@@ -27,20 +27,22 @@ export default function Home() {
   return (
     
     <ChakraProvider>
-      <Flex direction="column" align="center" justify="" height="100vh" padding="20px">
-        <Flex width="90%" justify="space-between" align="center" marginBottom="30px">
-          <Heading size="lg">Página web de pared eólica</Heading>
-          <Button onClick={() => router.push('/Historial')}>
-            Historial
-          </Button>
+      <main>
+        <Flex direction="column" align="center" justify="" height="100vh" padding="20px">
+          <Flex width="90%" justify="space-between" align="center" marginBottom="30px">
+            <Heading size="lg">Página web de pared eólica</Heading>
+            <Button onClick={() => router.push('/Historial')}>
+              Historial
+            </Button>
+          </Flex>
+          <CardsContainer />
+          <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
+            <MonthlyEnergyChart />
+            <GroupChartContainer />
+          </Flex>
+          
         </Flex>
-        <CardsContainer />
-        <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
-          <MonthlyEnergyChart />
-          <GroupChartContainer />
-        </Flex>
-        
-      </Flex>
+      </main>
     </ChakraProvider>
   );
 }

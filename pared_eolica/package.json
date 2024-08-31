@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate && prisma migrate deploy"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
@@ -14,6 +15,7 @@
     "@emotion/styled": "^11.13.0",
     "@prisma/client": "^5.19.0",
     "@prisma/extension-accelerate": "^1.1.0",
+    "@vercel/postgres": "^0.9.0",
     "chart.js": "^4.4.4",
     "framer-motion": "^11.3.30",
     "mongoose": "^8.6.0",

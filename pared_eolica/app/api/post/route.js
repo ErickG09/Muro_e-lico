@@ -23,9 +23,3 @@ export async function POST(request) {
       return NextResponse.json({ message: "Error creating data" }, { status: 500 });
     }
 }
-
-export async function GET() {
-    const data = await prisma.propellerData.findMany();
-
-    return NextResponse.json({ data });
-}
