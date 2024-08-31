@@ -11,8 +11,18 @@ import Button from './components/Button';
 import CardsContainer from "./components/CardsContainer";
 import MonthlyEnergyChart from "./components/MonthlyEnergyChart";
 import GroupChartContainer from "./components/GroupChartContainer";
+import prisma from "@/libs/prisma";
+
+async function getdata() {
+  const data = await prisma.propellerData.findMany();
+  console.log(data);
+
+  return data;
+}
 
 export default function Home() {
+  const data = getdata();
+  console.log(data);
   const router = useRouter();
   return (
     
