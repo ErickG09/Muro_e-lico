@@ -12,10 +12,10 @@ datasource db {
 
 model PropellerData {
   id String @default(cuid()) @id
-  propeller1 Int
-  propeller2 Int
-  propeller3 Int
-  propeller4 Int
-  propeller5 Int
+  propeller1 Float
+  propeller2 Float
+  propeller3 Float
+  propeller4 Float
+  propeller5 Float
   date DateTime @default(now())
 }
