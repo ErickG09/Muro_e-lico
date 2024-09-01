@@ -11,11 +11,23 @@ export async function GET(req) {
     });
 
     if (!latestData) {
-      return NextResponse.json({ message: 'No data found' }, { status: 404 });
+      const response = NextResponse.json({ message: 'No data found' }, { status: 404 });
+      response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+      response.headers.set('Pragma', 'no-cache');
+      response.headers.set('Expires', '0');
+      return response;
     }
 
-    return NextResponse.json(latestData, { status: 200 });
+    const response = NextResponse.json(latestData, { status: 200 });
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    return response;
   } catch (error) {
-    return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
+    const response = NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
+    response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    response.headers.set('Expires', '0');
+    return response;
   }
 }
