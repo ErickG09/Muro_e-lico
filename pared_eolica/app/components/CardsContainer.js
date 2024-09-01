@@ -2,31 +2,12 @@ import { Flex } from '@chakra-ui/react';
 import PropellerCard from './PropellerCard';
 import { useEffect, useState } from 'react';
 
-const CardsContainer = () => {
+const CardsContainer = ({latestData}) => {
 
-  const [latestData, setLatestData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  useEffect(() => {
-    const fetchLatestData = async () => {
-      try {
-        const response = await fetch('/api/get');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const data = await response.json();
-        setLatestData(data);
-        console.log(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-  
-    fetchLatestData();
-  }, []);
+
 
   return (
     <Flex 

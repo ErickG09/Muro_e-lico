@@ -11,8 +11,31 @@ import Button from './components/Button';
 import CardsContainer from "./components/CardsContainer";
 import MonthlyEnergyChart from "./components/MonthlyEnergyChart";
 import GroupChartContainer from "./components/GroupChartContainer";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+
+  const [latestData, setLatestData] = useState(null);
+
+  useEffect(() => {
+    const fetchLatestData = async () => {
+      try {
+        const response = await fetch('/api/get');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        setLatestData(data);
+        console.log(data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+  
+    fetchLatestData();
+  }, []);
+
+
 
   const router = useRouter();
   return (
@@ -25,7 +48,7 @@ export default function Home() {
             Historial
           </Button>
         </Flex>
-        <CardsContainer />
+        <CardsContainer latestData={latestData}/>
         <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
           <MonthlyEnergyChart />
           <GroupChartContainer />
