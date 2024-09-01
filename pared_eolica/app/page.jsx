@@ -18,9 +18,10 @@ export default function Home() {
   const [latestData, setLatestData] = useState(null);
 
   useEffect(() => {
+    console.log('fetching data');
     const fetchLatestData = async () => {
       try {
-        const response = await fetch('/api/get');
+        const response = await fetch('/api/get', { cache: 'no-store' });
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
@@ -28,7 +29,7 @@ export default function Home() {
         setLatestData(data);
         console.log(data);
       } catch (error) {
-        setError(error.message);
+        console.log(error);
       }
     };
   
