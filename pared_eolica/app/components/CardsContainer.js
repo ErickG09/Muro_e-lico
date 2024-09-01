@@ -1,7 +1,33 @@
 import { Flex } from '@chakra-ui/react';
 import PropellerCard from './PropellerCard';
+import { useEffect, useState } from 'react';
 
 const CardsContainer = () => {
+
+  const [latestData, setLatestData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  useEffect(() => {
+    const fetchLatestData = async () => {
+      try {
+        const response = await fetch('/api/get');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const data = await response.json();
+        setLatestData(data);
+        console.log(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchLatestData();
+  }, []);
+
   return (
     <Flex 
       justify="space-between" 
@@ -13,11 +39,11 @@ const CardsContainer = () => {
       gap="20px" 
       height="45%"
     >
-      <PropellerCard title="Hélice 1" percentage={30} voltage="220V" />
-      <PropellerCard title="Hélice 2" percentage={40} voltage="230V" />
-      <PropellerCard title="Hélice 3" percentage={65} voltage="240V" />
-      <PropellerCard title="Hélice 4" percentage={55} voltage="210V" />
-      <PropellerCard title="Hélice 5" percentage={0} voltage="--" />
+      <PropellerCard title="Hélice 1" percentage={Math.floor((latestData?.propeller1 * 100) / 7)} voltage={`${latestData?.propeller1.toFixed(2)}V`} />
+      <PropellerCard title="Hélice 2" percentage={Math.floor((latestData?.propeller2 * 100) / 7)} voltage={`${latestData?.propeller2.toFixed(2)}V`} />
+      <PropellerCard title="Hélice 3" percentage={Math.floor((latestData?.propeller3 * 100) / 7)} voltage={`${latestData?.propeller3.toFixed(2)}V`}/>
+      <PropellerCard title="Hélice 4" percentage={Math.floor((latestData?.propeller4 * 100) / 7)} voltage={`${latestData?.propeller4.toFixed(2)}V`}/>
+      <PropellerCard title="Hélice 5" percentage={Math.floor((latestData?.propeller5 * 100) / 7)} voltage={`${latestData?.propeller5.toFixed(2)}V`}/>
     </Flex>
   );
 };

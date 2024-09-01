@@ -1,6 +1,10 @@
 import { Box, Text, CircularProgress, CircularProgressLabel } from '@chakra-ui/react';
 
 const PropellerCard = ({ title, percentage, voltage }) => {
+
+
+  const progressColor = percentage < 40 ? 'red.400' : percentage < 70 ? 'yellow.400' : 'green.400';
+
   return (
     <Box 
       width="100%" 
@@ -13,7 +17,7 @@ const PropellerCard = ({ title, percentage, voltage }) => {
       <Text fontSize="lg" fontWeight="bold" marginBottom="20px">
         {title}
       </Text>
-      <CircularProgress value={percentage} color="green.400" size="100px" marginBottom="25px">
+      <CircularProgress value={percentage} color={progressColor} size="100px" marginBottom="25px">
         <CircularProgressLabel>{`${percentage}%`}</CircularProgressLabel>
       </CircularProgress>
       <Text fontSize="sm">Voltaje: {voltage || '--'}</Text>
