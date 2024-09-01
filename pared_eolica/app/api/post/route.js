@@ -23,3 +23,6 @@ export async function POST(request) {
       return NextResponse.json({ message: "Error creating data" }, { status: 500 });
     }
 }
+
+
+export const fetchCache = 'force-no-store';

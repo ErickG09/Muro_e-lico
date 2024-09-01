@@ -31,3 +31,5 @@ export async function GET(req) {
     return response;
   }
 }
+
+export const fetchCache = 'force-no-store';

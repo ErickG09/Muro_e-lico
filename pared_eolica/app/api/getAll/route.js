@@ -15,3 +15,5 @@ export async function GET(req) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   }
 }
+
+export const fetchCache = 'force-no-store';
