@@ -10,7 +10,7 @@ import CardsContainer from "./components/CardsContainer";
 import MonthlyEnergyChart from "./components/MonthlyEnergyChart";
 import GroupChartContainer from "./components/GroupChartContainer";
 import Link from 'next/link';
-//import { useEffect, useState } from "react";
+import prisma from "@/libs/prisma";
 
 async function getData(){
   const latestData = await prisma.propellerData.findFirst({
