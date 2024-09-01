@@ -1,3 +1,4 @@
+'use client'
 import { Flex } from '@chakra-ui/react';
 import PropellerCard from './PropellerCard';
 import { useEffect, useState } from 'react';
@@ -6,7 +7,6 @@ const CardsContainer = ({latestData}) => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
 
 
   return (
