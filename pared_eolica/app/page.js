@@ -25,10 +25,7 @@ async function getData(){
 
 export default async function Home() {
 
-  const res = await fetch('https://pared-eolica-ase-3.vercel.app/api/get', { cache: 'no-store' });
-  const data = await res.json();
-
-  // const data = await getData();
+  const data = await getData();
 
   return (
     <main>
