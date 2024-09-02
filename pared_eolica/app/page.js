@@ -17,15 +17,18 @@ async function getData(){
     orderBy: {
       id: 'desc',
     },
-    
-  }, { cache: 'no-store' });
+
+  });
   console.log(latestData);
   return latestData;
 }
 
 export default async function Home() {
 
-  const latestData = await getData();
+  // const res = await fetch('https://pared-eolica-ase-3.vercel.app/api/get', { cache: 'no-store' });
+  // const data = await res.json();
+
+  const data = await getData();
 
   return (
     <main>
@@ -39,7 +42,7 @@ export default async function Home() {
               </Link>
             </Button>
           </Flex>
-          <CardsContainer latestData={latestData}/>
+          <CardsContainer latestData={data}/>
           <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
             <MonthlyEnergyChart />
             <GroupChartContainer />
@@ -47,6 +50,6 @@ export default async function Home() {
           
         </Flex>
       </ChakraProvider>
-      </main>
+    </main>
   );
 }
