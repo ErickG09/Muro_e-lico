@@ -1,7 +1,12 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/libs/prisma';
+import { PrismaClient } from '@prisma/client';
+
+
 
 export async function GET(req) {
+
+  const prisma = new PrismaClient();
+
   try {
     // Fetch the latest added record from your database
     const latestData = await prisma.propellerData.findFirst({
