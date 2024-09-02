@@ -17,7 +17,8 @@ async function getData(){
     orderBy: {
       id: 'desc',
     },
-  });
+    
+  }, { cache: 'no-store' });
   console.log(latestData);
   return latestData;
 }
