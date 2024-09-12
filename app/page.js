@@ -11,8 +11,13 @@ import { get } from 'mongoose';
 
 async function getData() {
   try {
-    const response = await fetch('https://pared-eolica-ase-3.vercel.app/api/get', {
+    const response = await fetch('https://orm-paredeolica.onrender.com/api/v1/readLatest', {
       cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
     });
     if (!response.ok) {
       throw new Error('Network response was not ok');
