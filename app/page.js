@@ -11,7 +11,7 @@ import { get } from 'mongoose';
 
 async function getData() {
   try {
-    const response = await fetch('http://localhost:3000/api/get', {
+    const response = await fetch('https://pared-eolica-ase-3.vercel.app/api/get', {
       cache: 'no-cache',
     });
     if (!response.ok) {
