@@ -7,10 +7,13 @@ import MonthlyEnergyChart from "./components/MonthlyEnergyChart";
 import GroupChartContainer from "./components/GroupChartContainer";
 import Link from 'next/link';
 import prisma from "@/libs/prisma";
+import { get } from 'mongoose';
 
 async function getData() {
   try {
-    const response = await fetch('/api/get');
+    const response = await fetch('http://localhost:3000/api/get', {
+      cache: 'no-cache',
+    });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -22,25 +25,27 @@ async function getData() {
   }
 }
 
-export default function Home() {
-  const [data, setData] = useState(null);
+export default async function Home() {
 
-  useEffect(() => {
-    // Función para obtener y actualizar datos
-    const fetchData = async () => {
-      const latestData = await getData();
-      setData(latestData);
-    };
+  const data = await getData();
+  //const [data, setData] = useState(null);
 
-    // Obtén los datos inmediatamente al montar el componente
-    fetchData();
+  // useEffect(() => {
+  //   // Función para obtener y actualizar datos
+  //   const fetchData = async () => {
+  //     const latestData = await getData();
+  //     setData(latestData);
+  //   };
 
-    // Configura un intervalo para obtener datos cada 10 segundos
-    const intervalId = setInterval(fetchData, 10000);
+  //   // Obtén los datos inmediatamente al montar el componente
+  //   fetchData();
 
-    // Limpia el intervalo cuando el componente se desmonte
-    return () => clearInterval(intervalId);
-  }, []);
+  //   // Configura un intervalo para obtener datos cada 10 segundos
+  //   const intervalId = setInterval(fetchData, 10000);
+
+  //   // Limpia el intervalo cuando el componente se desmonte
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   return (
     <main>
