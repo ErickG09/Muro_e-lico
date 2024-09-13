@@ -1,5 +1,3 @@
-'use client'
-import { useEffect, useState } from 'react';
 import { ChakraProvider, Flex, Heading } from '@chakra-ui/react';
 import Button from './components/Button';
 import CardsContainer from "./components/CardsContainer";
@@ -30,9 +28,32 @@ async function getData() {
   }
 }
 
+async function getDayTotalData() {
+  try {
+    const response = await fetch('https://orm-paredeolica.onrender.com/api/v1/readDayTotal', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log(data); // Imprime los datos en la consola para verificar
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
 export default async function Home() {
 
+  //const data = {propeller1: 1, propeller2: 1, propeller3: 1, propeller4: 1, propeller5: 1}
   const data = await getData();
+  const dayTotalData = await getDayTotalData();
   //const [data, setData] = useState(null);
 
   // useEffect(() => {
@@ -67,7 +88,7 @@ export default async function Home() {
           <CardsContainer latestData={data}/>
           <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
             <MonthlyEnergyChart />
-            <GroupChartContainer />
+            <GroupChartContainer dayTotalData={dayTotalData} />
           </Flex>
         </Flex>
       </ChakraProvider>

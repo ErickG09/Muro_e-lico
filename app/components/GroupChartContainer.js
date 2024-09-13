@@ -2,7 +2,7 @@ import { Flex, Box } from '@chakra-ui/react';
 import GroupPieChart from './GroupPieChart';
 import GroupLegend from './GroupLegend';
 
-const GroupChartContainer = () => {
+const GroupChartContainer = ({dayTotalData}) => {
   return (
     <Flex
       width="40%"
@@ -13,8 +13,8 @@ const GroupChartContainer = () => {
       justifyContent="space-between"
       height="90%"
     >
-      <GroupPieChart />
-      <GroupLegend />
+      <GroupPieChart dayTotalData={dayTotalData}/>
+      <GroupLegend dayTotalData={dayTotalData}/>
     </Flex>
   );
 };
