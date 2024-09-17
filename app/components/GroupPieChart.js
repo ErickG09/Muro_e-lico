@@ -14,7 +14,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const GroupPieChart = ({dayTotalData}) => {
 
   // Si dayTotalData no tiene valores definidos, usa valores por defecto
-  const dataValues = [dayTotalData[0].grupo1, dayTotalData[0].grupo2, dayTotalData[0].grupo3];
+  const dataValues = [dayTotalData[0]?.grupo1, dayTotalData[0]?.grupo2, dayTotalData[0]?.grupo3];
 
   const data = {
     labels: ['Grupo 1', 'Grupo 2', 'Grupo 3'],

@@ -1,6 +1,6 @@
-import { Box, Flex, Text, Icon, Spacer } from '@chakra-ui/react';
+import { Box, Flex, Text, Icon, Spacer, Center } from '@chakra-ui/react';
 
-const GroupLegend = () => {
+const GroupLegend = ({dayTotalData}) => {
   const groups = [
     { name: 'Grupo 1', turbines: 'Hélice 1, Hélice 2', color: '#FF6384' },
     { name: 'Grupo 2', turbines: 'Hélice 3', color: '#FF9F40' },
@@ -10,7 +10,10 @@ const GroupLegend = () => {
   return (
     <Box>
         <Text fontSize="md" as={'b'}>
-          Total Generado el día de hoy
+          Total Generado el día <br></br>
+          <Center>
+            {dayTotalData[0]?.created_at}
+          </Center>
         </Text>
       {groups.map((group, index) => (
         <Flex key={index} align="center" marginBottom="20px" marginTop='20px' marginLeft='30px'>
