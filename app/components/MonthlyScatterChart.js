@@ -11,7 +11,7 @@ const MonthlyScatterChart = ({daysData}) => {
           const foundDay = daysData.find(d => d.created_at.includes(`2024-09-${day}`));
           return {
             x: day,
-            y: foundDay ? foundDay.total : 0,
+            y: foundDay ? ((foundDay.total / foundDay.entries) * 50).toFixed(2) : 0,
           };
         }),
         backgroundColor: 'rgba(255, 99, 132, 1)',
