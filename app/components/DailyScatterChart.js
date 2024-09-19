@@ -1,19 +1,17 @@
 import { Box, Heading } from '@chakra-ui/react';
 import ScatterChart from './ScatterChart';
 
-const DailyScatterChart = () => {
+const DailyScatterChart = ({energyPerHour}) => {
   const dailyData = {
     datasets: [
       {
-        label: 'Energía por día',
-        data: [
-          { x: 1, y: 300 },
-          { x: 2, y: 280 },
-          { x: 3, y: 290 },
-        ],
+        label: 'Watts Generados',
+
+        data: Array.from({ length: 24 }, (_, i) => ({ x: i, y: energyPerHour[i] || 0 })),
         backgroundColor: 'rgba(255, 99, 132, 1)',
       },
     ],
+    
   };
 
   return (

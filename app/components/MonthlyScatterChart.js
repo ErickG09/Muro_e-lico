@@ -1,17 +1,20 @@
 import { Box, Heading } from '@chakra-ui/react';
 import ScatterChart from './ScatterChart';
 
-const MonthlyScatterChart = () => {
+const MonthlyScatterChart = ({daysData}) => {
   const monthlyData = {
     datasets: [
       {
-        label: 'Energía por mes',
-        data: [
-          { x: 8, y: 300 },
-          { x: 9, y: 300 },
-          { x: 10, y: 300 },
-        ],
-        backgroundColor: 'rgba(54, 162, 235, 1)',
+        label: 'Watts Generados',
+        data: Array.from({ length: 30 }, (_, i) => {
+          const day = (i + 1).toString().padStart(2, '0');
+          const foundDay = daysData.find(d => d.created_at.includes(`2024-09-${day}`));
+          return {
+            x: day,
+            y: foundDay ? foundDay.total : 0,
+          };
+        }),
+        backgroundColor: 'rgba(255, 99, 132, 1)',
       },
     ],
   };

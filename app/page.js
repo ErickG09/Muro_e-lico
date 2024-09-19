@@ -9,7 +9,7 @@ import { get } from 'mongoose';
 
 async function getData() {
   try {
-    const response = await fetch('https://orm-paredeolica.onrender.com/api/v1/readLatest', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readLatest', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -30,7 +30,28 @@ async function getData() {
 
 async function getDayTotalData() {
   try {
-    const response = await fetch('https://orm-paredeolica.onrender.com/api/v1/readDayTotal', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readDayTotal', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log(data); // Imprime los datos en la consola para verificar
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
+async function getAllMonthsData() {
+  try {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readMonthTotal', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -54,6 +75,8 @@ export default async function Home() {
   //const data = {propeller1: 1, propeller2: 1, propeller3: 1, propeller4: 1, propeller5: 1}
   const data = await getData();
   const dayTotalData = await getDayTotalData();
+  const allMonthsData = await getAllMonthsData();
+  
   //const [data, setData] = useState(null);
 
   // useEffect(() => {

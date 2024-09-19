@@ -1,11 +1,44 @@
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Heading } from '@chakra-ui/react';
 
-const MonthlyHistory = () => {
-  const data = [
-    { mes: 'Agosto 2024', energia: 300 },
-    { mes: 'Septiembre 2024', energia: 300 },
-    { mes: 'Octubre 2024', energia: 300 },
-  ];
+const MonthlyHistory = ({monthsData}) => {
+
+  const monthConvertor = (month) => {
+    switch (month) {
+      case '01':
+        return 'Enero';
+      case '02':
+        return 'Febrero';
+      case '03':
+        return 'Marzo';
+      case '04':
+        return 'Abril';
+      case '05':
+        return 'Mayo';
+      case '06':
+        return 'Junio';
+      case '07':
+        return 'Julio';
+      case '08':
+        return 'Agosto';
+      case '09':
+        return 'Septiembre';
+      case '10':
+        return 'Octubre';
+      case '11':
+        return 'Noviembre';
+      case '12':
+        return 'Diciembre';
+      default:
+        return 'Mes no válido';
+    }
+  };
+
+  const data = monthsData.map((month) => {
+    return {
+      mes: monthConvertor(month.month),
+      energia: ((month.total / month.entries) * 50).toFixed(2)
+    };
+  });
 
   return (
     <TableContainer marginTop="30px" width="90%">
@@ -20,8 +53,8 @@ const MonthlyHistory = () => {
         <Tbody>
           {data.map((row, index) => (
             <Tr key={index}>
-              <Td>{row.mes}</Td>
-              <Td>{row.energia}</Td>
+              <Td>{row.mes} 2024</Td>
+              <Td>W {row.energia}</Td>
             </Tr>
           ))}
         </Tbody>
