@@ -7,7 +7,7 @@ const HistoryContainer = ({daysData, monthsData}) => {
     <Box width="90%" backgroundColor="#F7F8FA" padding="20px" borderRadius="20px">
       <VStack spacing="30px">
         <DailyHistory daysData={daysData}/>
-        <MonthlyHistory monthsData={monthsData}/>
+        <MonthlyHistory monthsData={monthsData} daysData={daysData}/>
       </VStack>
     </Box>
   );

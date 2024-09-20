@@ -1,6 +1,6 @@
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Heading } from '@chakra-ui/react';
 
-const MonthlyHistory = ({monthsData}) => {
+const MonthlyHistory = ({monthsData, daysData}) => {
 
   const monthConvertor = (month) => {
     switch (month) {
@@ -33,10 +33,20 @@ const MonthlyHistory = ({monthsData}) => {
     }
   };
 
+  const totalEnergyPerMonth = (month) => {
+    let total = 0;
+    daysData.forEach((day) => {
+      if (day.created_at.includes(month)) {
+        total += ((day.total / day.entries) * 50);
+      }
+    });
+    return total.toFixed(2);
+  };
+
   const data = monthsData.map((month) => {
     return {
       mes: monthConvertor(month.month),
-      energia: ((month.total / month.entries) * 50).toFixed(2)
+      energia: totalEnergyPerMonth(month.month)
     };
   });
 
@@ -54,7 +64,7 @@ const MonthlyHistory = ({monthsData}) => {
           {data.map((row, index) => (
             <Tr key={index}>
               <Td>{row.mes} 2024</Td>
-              <Td>W {row.energia}</Td>
+              <Td>mW {row.energia}</Td>
             </Tr>
           ))}
         </Tbody>

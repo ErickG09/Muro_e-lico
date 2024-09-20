@@ -12,7 +12,7 @@ const GroupLegend = ({dayTotalData}) => {
         <Text fontSize="md" as={'b'}>
           Total Generado el día <br></br>
           <Center>
-            {dayTotalData[0]?.created_at}
+            {dayTotalData?.created_at}
           </Center>
         </Text>
       {groups.map((group, index) => (

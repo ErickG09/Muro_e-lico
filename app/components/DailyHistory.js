@@ -23,7 +23,7 @@ const DailyHistory = ({daysData}) => {
           {data.map((row, index) => (
             <Tr key={index}>
               <Td>{row.fecha}</Td>
-              <Td>W {row.energia} </Td>
+              <Td>mW {row.energia} </Td>
             </Tr>
           ))}
         </Tbody>

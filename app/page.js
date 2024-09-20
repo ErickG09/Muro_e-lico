@@ -28,9 +28,9 @@ async function getData() {
   }
 }
 
-async function getDayTotalData() {
+async function getLatestDay() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readDayTotal', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readLatestDayTotal', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -74,8 +74,7 @@ export default async function Home() {
 
   //const data = {propeller1: 1, propeller2: 1, propeller3: 1, propeller4: 1, propeller5: 1}
   const data = await getData();
-  const dayTotalData = await getDayTotalData();
-  const allMonthsData = await getAllMonthsData();
+  const dayTotalData = await getLatestDay();
   
   //const [data, setData] = useState(null);
 
