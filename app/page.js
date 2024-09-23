@@ -1,11 +1,11 @@
+'use client';
 import { ChakraProvider, Flex, Heading } from '@chakra-ui/react';
 import Button from './components/Button';
 import CardsContainer from "./components/CardsContainer";
 import MonthlyEnergyChart from "./components/MonthlyEnergyChart";
 import GroupChartContainer from "./components/GroupChartContainer";
 import Link from 'next/link';
-import prisma from "@/libs/prisma";
-import { get } from 'mongoose';
+import { useEffect, useState } from 'react';
 
 async function getData() {
   try {
@@ -70,30 +70,33 @@ async function getAllMonthsData() {
   }
 }
 
-export default async function Home() {
+export default function Home() {
 
   //const data = {propeller1: 1, propeller2: 1, propeller3: 1, propeller4: 1, propeller5: 1}
-  const data = await getData();
-  const dayTotalData = await getLatestDay();
+  // const data = await getData();
+  // const dayTotalData = await getLatestDay();
   
-  //const [data, setData] = useState(null);
+  const [data, setData] = useState(null);
+  const [dayTotalData, setDayTotalData] = useState(null);
 
-  // useEffect(() => {
-  //   // Función para obtener y actualizar datos
-  //   const fetchData = async () => {
-  //     const latestData = await getData();
-  //     setData(latestData);
-  //   };
+  useEffect(() => {
+    // Función para obtener y actualizar datos
+    const fetchData = async () => {
+      const latestData = await getData();
+      const latestDay = await getLatestDay();
+      setData(latestData);
+      setDayTotalData(latestDay);
+    };
 
-  //   // Obtén los datos inmediatamente al montar el componente
-  //   fetchData();
+    // Obtén los datos inmediatamente al montar el componente
+    fetchData();
 
-  //   // Configura un intervalo para obtener datos cada 10 segundos
-  //   const intervalId = setInterval(fetchData, 10000);
+    // Configura un intervalo para obtener datos cada 10 segundos
+    const intervalId = setInterval(fetchData, 10000);
 
-  //   // Limpia el intervalo cuando el componente se desmonte
-  //   return () => clearInterval(intervalId);
-  // }, []);
+    // Limpia el intervalo cuando el componente se desmonte
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <main>

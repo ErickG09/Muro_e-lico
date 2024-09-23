@@ -2,7 +2,7 @@ import { Table, Thead, Tbody, Tr, Th, Td, TableContainer, Heading } from '@chakr
 
 const DailyHistory = ({daysData}) => {
 
-  const data = daysData.slice(0, 3).map((day) => {
+  const data = daysData.slice(-3).map((day) => {
     return {
       fecha: day.created_at,
       energia: ((day.total / day.entries) * 50).toFixed(2)

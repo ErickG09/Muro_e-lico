@@ -6,9 +6,9 @@ const DailyLineChart = ({ energyPerHour }) => {
     labels: Array.from({ length: 24 }, (_, i) => i),
     datasets: [
       {
-        label: 'Watts Generados',
+        label: 'mW Generados',
         data: Array.from({ length: 24 }, (_, i) => (
-          energyPerHour[`0${i}`] || energyPerHour[i] || 0
+          energyPerHour[`0${i}`]/1 * 50  || energyPerHour[i]/1 * 50 || 0
         )),
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgba(255, 99, 132, 1)',
@@ -41,7 +41,7 @@ const DailyLineChart = ({ energyPerHour }) => {
       y: {
         title: {
           display: true,
-          text: 'Watts Generados',
+          text: 'mW Generados',
         },
         beginAtZero: true,
       },

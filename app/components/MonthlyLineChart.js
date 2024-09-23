@@ -8,7 +8,7 @@ const MonthlyLineChart = ({ daysData }) => {
     labels,  // Etiquetas en el eje X (días del mes)
     datasets: [
       {
-        label: 'Watts Generados',
+        label: 'mW Generados',
         data: labels.map(day => {
           const foundDay = daysData.find(d => d.created_at.includes(`2024-09-${day}`));
           return foundDay ? ((foundDay.total / foundDay.entries) * 50).toFixed(2) : 0;
@@ -44,7 +44,7 @@ const MonthlyLineChart = ({ daysData }) => {
       y: {
         title: {
           display: true,
-          text: 'Watts Generados',
+          text: 'mW Generados',
         },
         beginAtZero: true,
       },
