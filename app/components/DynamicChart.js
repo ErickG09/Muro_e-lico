@@ -1,4 +1,3 @@
-// src/components/DynamicChart.js
 "use client";
 
 import { useState } from "react";

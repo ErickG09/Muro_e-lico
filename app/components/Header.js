@@ -1,4 +1,3 @@
-// src/components/Header.js
 "use client";
 import { usePathname } from 'next/navigation'; // Importar el hook usePathname
 import { Flex, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";

@@ -1,4 +1,3 @@
-// src/components/DayProgress.js
 "use client";
 
 import { Box, Text, Flex, Progress, VStack } from "@chakra-ui/react";
