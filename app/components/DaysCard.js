@@ -60,7 +60,7 @@ export default function DayProgress({weekData}) {
               />
             </Box>
             <Text w="25%" textAlign="right" fontSize="sm"> {/* Reducir tamaño del texto y ajustar ancho */}
-              {data.value} Watts
+              {data.value.toFixed(4)} Watts
             </Text>
           </Flex>
         ))}

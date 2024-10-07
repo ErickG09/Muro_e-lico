@@ -15,7 +15,8 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function GeneratingTodayCard({todayData}) {
 
   // Datos de generación de hoy
-  const today = todayData?.total * 0.01 || 0;
+  const today = ((todayData?.propeller1 + todayData?.propeller2 + todayData?.propeller3 + todayData?.propeller4 + todayData?.propeller5) * 0.01).toFixed(4) || 0;
+
 
   // Datos para el gráfico de dona
 
@@ -24,7 +25,7 @@ export default function GeneratingTodayCard({todayData}) {
     datasets: [
       {
         label: 'mW',
-        data: [todayData?.total, 0.5], // Datos de generación y pérdida
+        data: [today, today*0.2], // Datos de generación y pérdida
         backgroundColor: ['#4A5568', '#CBD5E0'], // Colores neutros y minimalistas
         borderWidth: 0,
         hoverOffset: 4,

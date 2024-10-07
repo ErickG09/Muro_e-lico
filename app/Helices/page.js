@@ -92,8 +92,8 @@ export default function Home() {
             <GroupChartContainer dayTotalData={dayTotalData} />
 
             <Flex direction="column" gap="4" width="25%"> 
-              <OverviewCard title="Today" value={dayTotalData?.total * 0.01 || 'N/A'} unit="mW" />
-              <OverviewCard title="Now" value={(data?.propeller1 + data?.propeller2 + data?.propeller3 + data?.propeller4 + data?.propeller5) * 0.01  || 'N/A'} unit="mW" />
+              <OverviewCard title="Today" value={(dayTotalData?.total * 0.01).toFixed(4) || 'N/A'} unit="mW" />
+              <OverviewCard title="Now" value={((data?.propeller1 + data?.propeller2 + data?.propeller3 + data?.propeller4 + data?.propeller5) * 0.01).toFixed(4)  || 'N/A'} unit="mW" />
             </Flex>
           </Flex>
         </Flex>
