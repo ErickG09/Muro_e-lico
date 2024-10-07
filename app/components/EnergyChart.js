@@ -21,11 +21,18 @@ const getFormattedDate = () => {
   return new Date().toLocaleDateString("en-US", options);
 };
 
-export default function EnergyChart({ isSidebarOpen }) {
+export default function EnergyChart({ isSidebarOpen, allHours }) {
+
+  const newData = allHours;
+
   const [currentDate, setCurrentDate] = useState("");
   const [displayData, setDisplayData] = useState([]);
   const [displayLabels, setDisplayLabels] = useState([]);
   const [chartWidth, setChartWidth] = useState("100%");
+  const [fullData, setFullData] = useState([]);
+  const [fullLabels, setFullLabels] = useState([]);
+
+
 
   useEffect(() => {
     // Establecer la fecha inicial cuando se cargue en el cliente
@@ -33,12 +40,12 @@ export default function EnergyChart({ isSidebarOpen }) {
   }, []);
 
   useEffect(() => {
-    const fullData = [
-      0.1, 0.3, 0.2, 0.5, 0.4, 0.7, 0.6, 0.8, 0.5, 0.7, 0.9, 0.8, 0.6, 0.7,
-      0.5, 0.4, 0.3, 0.2, 0.4, 0.5, 0.6, 0.4, 0.3, 0.1,
-    ]; // Datos completos
-    const fullLabels = Array.from({ length: 24 }, (_, i) => i); // Etiquetas completas
-
+    if (newData) {
+      const hours = Object.keys(newData);
+      const generatedValues = Object.values(newData);
+      setFullData(generatedValues);
+      setFullLabels(hours);
+    }
     if (isSidebarOpen) {
       setDisplayData(fullData.filter((_, index) => index % 2 === 0));
       setDisplayLabels(fullLabels.filter((_, index) => index % 2 === 0));
@@ -48,7 +55,7 @@ export default function EnergyChart({ isSidebarOpen }) {
       setDisplayLabels(fullLabels);
       setChartWidth("100%"); // Ancho completo cuando el sidebar está cerrado
     }
-  }, [isSidebarOpen]);
+  }, [isSidebarOpen, newData]);
 
   const data = {
     labels: displayLabels,

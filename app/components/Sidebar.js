@@ -52,24 +52,23 @@ export default function Sidebar({ isOpen, onClose }) {
       <Flex direction="column" flex="1" justifyContent="space-between">
         {/* Sección de Dashboards */}
         <VStack align="start" spacing="4" px="6">
-          <Link href="/" passHref>
-            <ChakraLink display="flex" alignItems="center" onClick={onClose} py="2" w="full">
-              <Icon as={FaHome} mr="3" />
-              Main
-            </ChakraLink>
-          </Link>
-          <Link href="/Helices" passHref>
-            <ChakraLink display="flex" alignItems="center" onClick={onClose} py="2" w="full">
-              <Icon as={FaWind} mr="3" />
-              Propellers
-            </ChakraLink>
-          </Link>
-          <Link href="/Historial" passHref>
-            <ChakraLink display="flex" alignItems="center" onClick={onClose} py="2" w="full">
-              <Icon as={FaHistory} mr="3" />
-              History
-            </ChakraLink>
-          </Link>
+
+          <ChakraLink href="/" display="flex" alignItems="center" onClick={onClose} py="2" w="full">
+            <Icon as={FaHome} mr="3" />
+            Main
+          </ChakraLink>
+
+          <ChakraLink href="/Helices" display="flex" alignItems="center" onClick={onClose} py="2" w="full">
+            <Icon as={FaWind} mr="3" />
+            Propellers
+          </ChakraLink>
+
+
+          <ChakraLink href="/Historial" display="flex" alignItems="center" onClick={onClose} py="2" w="full">
+            <Icon as={FaHistory} mr="3" />
+            History
+          </ChakraLink>
+
         </VStack>
 
         {/* Footer del sidebar */}

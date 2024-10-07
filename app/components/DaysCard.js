@@ -2,19 +2,32 @@
 
 import { Box, Text, Flex, Progress, VStack } from "@chakra-ui/react";
 
-const daysData = [
-  { day: "Monday", value: 8 },
-  { day: "Tuesday", value: 12 },
-  { day: "Wednesday", value: 7 },
-  { day: "Thursday", value: 20 },
-  { day: "Friday", value: 6 },
-  { day: "Saturday", value: 10 },
-  { day: "Sunday", value: 8 },
-];
 
-const maxValue = 20; // Valor máximo para las barras de progreso
 
-export default function DayProgress() {
+const maxValue = 20 * 0.01; // Valor máximo para las barras de progreso
+
+export default function DayProgress({weekData}) {
+
+  const data = weekData?.week_totals;
+
+  // Lista de días de la semana en orden
+  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+  // Crear un diccionario más simple con solo los nombres de los días
+  const dayValues = {};
+  for (let dateString in data) {
+      // Extraer el día del string de fecha
+      const dayName = dateString.split(",")[0]; // Toma la primera parte antes de la coma
+      dayValues[dayName] = data[dateString];
+  }
+
+  // Crear la estructura final
+  const daysData = daysOfWeek.map((day) => ({
+      day: day,
+      value: dayValues[day] || 0 // Si no existe el valor, se asigna 0
+  }));
+
+  
   return (
     <Box
       bg="white"

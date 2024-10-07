@@ -7,17 +7,24 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import { useState, useEffect } from 'react';
 
 // Registrar los elementos necesarios
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function GeneratingTodayCard() {
+export default function GeneratingTodayCard({todayData}) {
+
+  // Datos de generación de hoy
+  const today = todayData?.total * 0.01 || 0;
+
+  // Datos para el gráfico de dona
+
   const data = {
     labels: ['Generated', 'Lost'],
     datasets: [
       {
         label: 'mW',
-        data: [156, 44],
+        data: [todayData?.total, 0.5], // Datos de generación y pérdida
         backgroundColor: ['#4A5568', '#CBD5E0'], // Colores neutros y minimalistas
         borderWidth: 0,
         hoverOffset: 4,
@@ -66,7 +73,7 @@ export default function GeneratingTodayCard() {
         <Flex flexDirection="column" alignItems="flex-start" justifyContent="left">
           {/* Valor de mW */}
           <Flex alignItems="baseline" mb="1">
-            <Text fontSize="3xl" fontWeight="bold" mr="1">156</Text>
+            <Text fontSize="3xl" fontWeight="bold" mr="1">{today}</Text>
             <Text fontSize="sm" color="gray.500">mW</Text> {/* Texto más pequeño y minimalista */}
           </Flex>
 

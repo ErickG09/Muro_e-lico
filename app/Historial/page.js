@@ -6,12 +6,232 @@ import DaysCard from "../components/DaysCard";
 import EnergyChart from "../components/EnergyChart";
 import OverviewCard from "../components/OverviewCard";
 import Button from "../components/Button"; 
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { saveAs } from 'file-saver';
+import ExcelJS from 'exceljs';
+
+// Funcin para obtener datos desde la API
+async function getAllWallData() {
+  try {
+      const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readAll');
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error("Error al obtener los datos de la API:", error);
+      return [];
+  }
+}
+
+// Funcin para exportar los datos a Excel con formato
+async function exportToExcel() {
+  // Obtener los datos de la API
+  const jsonData = await getAllWallData();
+
+  if (jsonData.length === 0) {
+      alert("No hay datos para exportar.");
+      return;
+  }
+
+  // Crear un nuevo libro de trabajo con ExcelJS
+  const workbook = new ExcelJS.Workbook();
+  const worksheet = workbook.addWorksheet('Datos');
+
+  // Crear la fila de encabezado con estilos
+  const header = Object.keys(jsonData[0]);
+  const headerRow = worksheet.addRow(header);
+
+  // Aplicar estilos a la fila de encabezado
+  headerRow.eachCell((cell, colNumber) => {
+      cell.font = { bold: true };
+      cell.alignment = { vertical: 'middle', horizontal: 'center' };
+      cell.fill = {
+          type: 'pattern',
+          pattern: 'solid',
+          fgColor: { argb: 'D3D3D3' }  // Color gris claro
+      };
+      cell.border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' }
+      };
+  });
+
+  // Aadir datos al worksheet y aplicar formato condicional a las filas con 'hour'
+  jsonData.forEach((item) => {
+      const row = worksheet.addRow(Object.values(item));
+
+      // Aplicar estilos de fondo gris claro si la fila corresponde a una hora especfica
+      if (item.hour) {
+          row.eachCell((cell) => {
+              cell.fill = {
+                  type: 'pattern',
+                  pattern: 'solid',
+                  fgColor: { argb: 'F0F0F0' }  // Color gris claro para las filas de horas
+              };
+          });
+      }
+  });
+
+  // Ajustar el ancho de las columnas segn el contenido
+  worksheet.columns.forEach(column => {
+      let maxLength = 0;
+      column.eachCell({ includeEmpty: true }, cell => {
+          maxLength = Math.max(maxLength, cell.value ? cell.value.toString().length : 0);
+      });
+      column.width = maxLength < 10 ? 10 : maxLength;
+  });
+
+  // Crear el archivo Excel y desencadenar la descarga
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  saveAs(blob, "datos_muroeolico.xlsx");
+}
+
+async function getData() {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/api/v1/getTotal', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
+async function getCurrentMonth() {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/api/v1/getCurrentMonth', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
+async function getWeek() {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/api/v1/getWeek', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
+async function getCurrentDay() {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/api/v1/getCurrentDay', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
+async function getAllHours() {
+  try {
+    const response = await fetch('http://127.0.0.1:5000/api/v1/getAllHours', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
 
 export default function HistorialPage() {
+
+  const [data, setData] = useState(null);
+  const [currentMonth, setCurrentMonth] = useState(null);
+  const [week, setWeek] = useState(null);
+  const [currentDay, setCurrentDay] = useState(null);
+  const [allHours, setAllHours] = useState(null);
+
+  useEffect(() => {
+    // Función para obtener y actualizar datos
+    const fetchData = async () => {
+      const data = await getData();
+      setData(data);
+      const currentMonth = await getCurrentMonth();
+      setCurrentMonth(currentMonth);
+      const week = await getWeek();
+      setWeek(week);
+      const currentDay = await getCurrentDay();
+      setCurrentDay(currentDay);
+      const allHours = await getAllHours();
+      setAllHours(allHours);
+    };
+
+    // Obtén los datos inmediatamente al montar el componente
+    fetchData();
+
+    // Configura un intervalo para obtener datos cada 10 segundos
+    const intervalId = setInterval(fetchData, 10000);
+
+    // Limpia el intervalo cuando el componente se desmonte
+    return () => clearInterval(intervalId);
+  }, []);
+
+
   return (
     <Box px="8" py="4" height="100vh" bg="#F8F9FA" position="relative">
       <Box position="absolute" top="16px" right="16px">
-        <Button>
+        <Button
+          onClick={exportToExcel}
+
+        >
           Export 
         </Button>
       </Box>
@@ -19,19 +239,19 @@ export default function HistorialPage() {
       <Box mb="8" pt="10"> 
         <Heading as="h3" size="lg" mb="4">Overview</Heading>
         <SimpleGrid columns={{ base: 1, md: 4 }} spacing="4">
-          <OverviewCard bg="blue.50" title="Today" value="7,265" unit="mW" />
-          <OverviewCard title="This week" value="3,671" unit="mW" bg="purple.50"/>
-          <OverviewCard title="This month" value="156" unit="mW" bg="blue.50"/>
-          <OverviewCard title="All generated" value="2,318" unit="mW" bg="purple.50"/>
+          <OverviewCard bg="blue.50" title="Today" value={currentDay?.total * 0.01} unit="mW" />
+          <OverviewCard title="This week" value={week?.total_week * 0.01} unit="mW" bg="purple.50"/>
+          <OverviewCard title="This month" value={currentMonth?.total * 0.01} unit="mW" bg="blue.50"/>
+          <OverviewCard title="All generated" value={data?.total * 0.01} unit="mW" bg="purple.50"/>
         </SimpleGrid>
       </Box>
 
       <Grid templateColumns={{ base: "1fr", md: "1.2fr 1fr" }} gap={6} mb={8}>
         <GridItem>
-          <EnergyChart />
+          <EnergyChart allHours={allHours}/>
         </GridItem>
         <GridItem>
-          <DaysCard />
+          <DaysCard weekData={week}/>
         </GridItem>
       </Grid>
 
@@ -41,103 +261,3 @@ export default function HistorialPage() {
     </Box>
   );
 }
-
-
-// import { 
-//   ChakraProvider, 
-//   Flex,
-//   Heading
-// } from '@chakra-ui/react';
-// import Button from '../components/Button';
-// import HistoryContainer from '../components/HistoryContainer';
-// import ChartsContainer from '../components/ChartsContainer';
-// import Link from 'next/link';
-
-// async function getDayTotalData() {
-//   try {
-//     const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readDayTotal', {
-//       cache: 'no-cache',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'cors': 'no-cors'
-//       }
-
-//     });
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-//     const data = await response.json();
-//     console.log(data); // Imprime los datos en la consola para verificar
-//     return data;
-//   } catch (error) {
-//     console.error('Error al obtener los datos:', error);
-//   }
-// }
-
-// async function getAllMonthsData() {
-// try {
-//   const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readMonthTotal', {
-//   cache: 'no-cache',
-//   headers: {
-//       'Content-Type': 'application/json',
-//       'cors': 'no-cors'
-//   }
-
-//   });
-//   if (!response.ok) {
-//   throw new Error('Network response was not ok');
-//   }
-//   const data = await response.json();
-//   console.log(data); // Imprime los datos en la consola para verificar
-//   return data;
-// } catch (error) {
-//   console.error('Error al obtener los datos:', error);
-// }
-// }
-
-
-// async function getEnergyPerHour() {
-//   try {
-//       const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readCurrentDay', {
-//       cache: 'no-cache',
-//       headers: {
-//           'Content-Type': 'application/json',
-//           'cors': 'no-cors'
-//       }
-
-//       });
-//       if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//       }
-//       const data = await response.json();
-//       console.log(data); // Imprime los datos en la consola para verificar
-//       return data;
-//   } catch (error) {
-//       console.error('Error al obtener los datos:', error);
-//   }
-// }
-
-// export default async function HistorialPage() {
-
-//   const dayTotalData = await getDayTotalData();
-//   const allMonthsData = await getAllMonthsData();
-//   const energyPerHour = await getEnergyPerHour();
-
-//   return (
-//       <ChakraProvider>
-//           <Flex direction="column" align="center" justify="" height="100vh" padding="20px">
-//               <Flex width="90%" justify="space-between" align="center" marginBottom="30px">
-//                   <Heading size="lg">Historial de energía generada</Heading>
-//                   <Link href={'/'}>
-//                       <Button>
-//                           Home
-//                       </Button>
-//                   </Link>
-//               </Flex>
-//               <HistoryContainer daysData={dayTotalData} monthsData={allMonthsData}/> 
-//               <ChartsContainer daysData={dayTotalData} monthsData={allMonthsData} energyPerHour={energyPerHour}/>
-//           </Flex>
-//       </ChakraProvider>
-//   );
-// }
-

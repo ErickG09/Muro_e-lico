@@ -7,6 +7,7 @@ import MonthlyEnergyChart from "../components/MonthlyEnergyChart";
 import GroupChartContainer from "../components/GroupChartContainer";
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import OverviewCard from '../components/OverviewCard';
 
 async function getData() {
   try {
@@ -22,16 +23,16 @@ async function getData() {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    console.log(data); // Imprime los datos en la consola para verificar
+
     return data;
   } catch (error) {
     console.error('Error al obtener los datos:', error);
   }
 }
 
-async function getLatestDay() {
+async function getCurrentDay() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readLatestDayTotal', {
+    const response = await fetch('http://127.0.0.1:5000/api/v1/getCurrentDay', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -43,28 +44,6 @@ async function getLatestDay() {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    console.log(data); // Imprime los datos en la consola para verificar
-    return data;
-  } catch (error) {
-    console.error('Error al obtener los datos:', error);
-  }
-}
-
-async function getAllMonthsData() {
-  try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readMonthTotal', {
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-        'cors': 'no-cors'
-      }
-
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    console.log(data); // Imprime los datos en la consola para verificar
     return data;
   } catch (error) {
     console.error('Error al obtener los datos:', error);
@@ -84,7 +63,7 @@ export default function Home() {
     // Función para obtener y actualizar datos
     const fetchData = async () => {
       const latestData = await getData();
-      const latestDay = await getLatestDay();
+      const latestDay = await getCurrentDay();
       setData(latestData);
       setDayTotalData(latestDay);
     };
@@ -113,8 +92,8 @@ export default function Home() {
             <GroupChartContainer dayTotalData={dayTotalData} />
 
             <Flex direction="column" gap="4" width="25%"> 
-              <OverviewCard title="Today" value={dayTotalData?.today || 'N/A'} unit="mW" />
-              <OverviewCard title="Now" value={dayTotalData?.now || 'N/A'} unit="mW" />
+              <OverviewCard title="Today" value={dayTotalData?.total * 0.01 || 'N/A'} unit="mW" />
+              <OverviewCard title="Now" value={(data?.propeller1 + data?.propeller2 + data?.propeller3 + data?.propeller4 + data?.propeller5) * 0.01  || 'N/A'} unit="mW" />
             </Flex>
           </Flex>
         </Flex>

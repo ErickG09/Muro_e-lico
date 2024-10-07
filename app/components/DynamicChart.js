@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { Box, Button, ButtonGroup, Flex, Text, Select } from "@chakra-ui/react";
 import { Line } from "react-chartjs-2";
 import {
@@ -13,6 +13,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import axios from "axios";
 
 ChartJS.register(
   CategoryScale,
@@ -24,8 +25,45 @@ ChartJS.register(
   Legend
 );
 
+
 export default function DynamicChart() {
   const [timeFrame, setTimeFrame] = useState("hour"); // Estado para controlar el periodo de tiempo
+  const [hourChart, setHourChart] = useState();
+  const [dayChart, setDayChart] = useState();
+  const [monthChart, setMonthChart] = useState();
+  const [yearChart, setYearChart] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+      if (timeFrame === "hour") {
+        const response = await axios.get('http://127.0.0.1:5000/api/v1/getAllMinutes');
+        setHourChart(response.data);
+        console.log(response.data);
+        console.log(typeof hourChart);
+      } else if (timeFrame === "day") {
+        const response = await axios.get('http://127.0.0.1:5000/api/v1/getAllHours');
+        setDayChart(response.data);
+        console.log(response.data);
+      } else if (timeFrame === "month") {
+        const response = await axios.get('http://127.0.0.1:5000/api/v1/read30days');
+        setMonthChart(response.data);
+        console.log(response.data);
+      } else if (timeFrame === "year") {
+        const response = await axios.get('http://127.0.0.1:5000/api/v1/readAllMonths');
+        setYearChart(response.data);
+        console.log(response.data);
+      }
+      } catch (error) {
+      console.error('Error fetching data: ', error);
+      }
+    };
+
+    fetchData();
+  }, [timeFrame]);
+
+
+
 
   const handleTimeFrameChange = (value) => {
     setTimeFrame(value);
@@ -35,24 +73,26 @@ export default function DynamicChart() {
   const getDataForTimeFrame = () => {
     switch (timeFrame) {
       case "hour":
-        return {
-          labels: Array.from({ length: 12 }, (_, i) => `${i * 5} min`), // Cada 5 minutos por hora
-          data: [5, 10, 7, 15, 13, 20, 16, 25, 18, 30, 28, 35],
-        };
+
+      return {
+        labels: Array.from({ length: 60 }, (_, i) => `${i + 1}`), // Minutos de la hora
+        data: hourChart ? Array.from({ length: 60 }, (_, i) => hourChart[i + 1] || 0) : [],
+      };
+
       case "day":
         return {
-          labels: Array.from({ length: 24 }, (_, i) => `${i}:00`), // Horas del día
-          data: [10, 15, 12, 20, 18, 25, 22, 30, 24, 35, 30, 40, 38, 45, 42, 50, 48, 55, 52, 60, 58, 65, 62, 70],
+          labels: Array.from({ length: 24 }, (_, i) => `${i + 1}`), // Horas del día
+          data: dayChart ? Array.from({ length: 24 }, (_, i) => dayChart[i + 1] || 0) : [],
         };
       case "month":
         return {
-          labels: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`), // Días del mes
-          data: Array.from({ length: 30 }, () => Math.floor(Math.random() * 100)),
+          labels: Array.from({ length: 30 }, (_, i) => `${i + 1}`), // Días del mes
+          data: monthChart ? Array.from({ length: 30 }, (_, i) => monthChart[String(i + 1).padStart(2, '0')] || 0) : [],
         };
       case "year":
         return {
           labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], // Meses del año
-          data: Array.from({ length: 12 }, () => Math.floor(Math.random() * 100)),
+          data: yearChart ? Array.from({ length: 12 }, (_, i) => yearChart[i + 1] || 0) : [],
         };
       default:
         return { labels: [], data: [] };
