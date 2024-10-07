@@ -129,6 +129,26 @@ async function getLatest(){
   }
 }
 
+async function getTempLatest(){
+  try {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readTempLatest', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
 export default function MainPage() {
 
   const [data, setData] = useState(null);
@@ -136,6 +156,7 @@ export default function MainPage() {
   const [week, setWeek] = useState(null);
   const [currentDay, setCurrentDay] = useState(null);
   const [allHours, setAllHours] = useState(null);
+  const [tempLatest, setTempLatest] = useState(null);
   const [latest, setLatest] = useState(null);
 
   useEffect(() => {
@@ -151,8 +172,10 @@ export default function MainPage() {
       setCurrentDay(currentDay);
       const allHours = await getAllHours();
       setAllHours(allHours);
-      const latest = await getLatest();
-      setLatest(latest);
+      const getlatest = await getLatest();
+      setLatest(getlatest); // Update setLatest to setNewLatest
+      const tempLatest = await getTempLatest();
+      setTempLatest(tempLatest);
     };
 
     // Obtén los datos inmediatamente al montar el componente
@@ -165,6 +188,31 @@ export default function MainPage() {
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    const deleteData = async () => {
+      try {
+        const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/resetTempWallData', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'cors': 'no-cors'
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log('Data deleted successfully');
+      } catch (error) {
+        console.error('Error deleting data:', error);
+      }
+    };
+
+    // Set up an interval to delete data every 5 minutes
+    const intervalId = setInterval(deleteData, 20000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <Box px="8" py="4" height="100vh" bg="#F8F9FA">
@@ -192,7 +240,7 @@ export default function MainPage() {
           <WeatherWidget />
         </GridItem>
         <GridItem>
-          <GeneratingTodayCard todayData={latest}/>
+          <GeneratingTodayCard todayData={tempLatest}/>
         </GridItem>
       </Grid>
     </Box>

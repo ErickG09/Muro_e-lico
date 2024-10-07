@@ -50,6 +50,26 @@ async function getCurrentDay() {
   }
 }
 
+async function getTempLatest(){
+  try {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readTempLatest', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
+
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
+
 export default function Home() {
 
   //const data = {propeller1: 1, propeller2: 1, propeller3: 1, propeller4: 1, propeller5: 1}
@@ -58,7 +78,7 @@ export default function Home() {
   
   const [data, setData] = useState(null);
   const [dayTotalData, setDayTotalData] = useState(null);
-
+  const [tempLatest, setTempLatest] = useState(null);
   useEffect(() => {
     // Función para obtener y actualizar datos
     const fetchData = async () => {
@@ -66,6 +86,8 @@ export default function Home() {
       const latestDay = await getCurrentDay();
       setData(latestData);
       setDayTotalData(latestDay);
+      const tempLatest = await getTempLatest();
+      setTempLatest(tempLatest);
     };
 
     // Obtén los datos inmediatamente al montar el componente
@@ -78,6 +100,32 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    const deleteData = async () => {
+      try {
+        const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/resetTempWallData', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'cors': 'no-cors'
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        console.log('Data deleted successfully');
+      } catch (error) {
+        console.error('Error deleting data:', error);
+      }
+    };
+
+    // Set up an interval to delete data every 5 minutes
+    const intervalId = setInterval(deleteData, 20000);
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <main>
       <ChakraProvider>
@@ -86,14 +134,14 @@ export default function Home() {
             <Heading as="h3" size="lg" mb="4">Propellers Overview</Heading>
           </Flex>
 
-          <CardsContainer latestData={data} />
+          <CardsContainer latestData={tempLatest} />
 
           <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
             <GroupChartContainer dayTotalData={dayTotalData} />
 
             <Flex direction="column" gap="4" width="25%"> 
               <OverviewCard title="Today" value={(dayTotalData?.total * 0.01).toFixed(4) || 'N/A'} unit="mW" />
-              <OverviewCard title="Now" value={((data?.propeller1 + data?.propeller2 + data?.propeller3 + data?.propeller4 + data?.propeller5) * 0.01).toFixed(4)  || 'N/A'} unit="mW" />
+              <OverviewCard title="Now" value={((tempLatest?.propeller1 + tempLatest?.propeller2 + tempLatest?.propeller3 + tempLatest?.propeller4 + tempLatest?.propeller5) * 0.01).toFixed(4)  || 'N/A'} unit="mW" />
             </Flex>
           </Flex>
         </Flex>
