@@ -91,7 +91,7 @@ async function exportToExcel() {
 
 async function getData() {
   try {
-    const response = await fetch('http://127.0.0.1:5000/api/v1/getTotal', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getTotal', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ async function getData() {
 
 async function getCurrentMonth() {
   try {
-    const response = await fetch('http://127.0.0.1:5000/api/v1/getCurrentMonth', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getCurrentMonth', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ async function getCurrentMonth() {
 
 async function getWeek() {
   try {
-    const response = await fetch('http://127.0.0.1:5000/api/v1/getWeek', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getWeek', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -152,7 +152,7 @@ async function getWeek() {
 
 async function getCurrentDay() {
   try {
-    const response = await fetch('http://127.0.0.1:5000/api/v1/getCurrentDay', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getCurrentDay', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ async function getCurrentDay() {
 
 async function getAllHours() {
   try {
-    const response = await fetch('http://127.0.0.1:5000/api/v1/getAllHours', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getAllHours', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',

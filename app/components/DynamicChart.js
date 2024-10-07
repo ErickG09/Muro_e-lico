@@ -37,20 +37,20 @@ export default function DynamicChart() {
     const fetchData = async () => {
       try {
       if (timeFrame === "hour") {
-        const response = await axios.get('http://127.0.0.1:5000/api/v1/getAllMinutes');
+        const response = await axios.get('https://orm-pared-eolica.vercel.app/api/v1/getAllMinutes');
         setHourChart(response.data);
         console.log(response.data);
         console.log(typeof hourChart);
       } else if (timeFrame === "day") {
-        const response = await axios.get('http://127.0.0.1:5000/api/v1/getAllHours');
+        const response = await axios.get('https://orm-pared-eolica.vercel.app/api/v1/getAllHours');
         setDayChart(response.data);
         console.log(response.data);
       } else if (timeFrame === "month") {
-        const response = await axios.get('http://127.0.0.1:5000/api/v1/read30days');
+        const response = await axios.get('https://orm-pared-eolica.vercel.app/api/v1/read30days');
         setMonthChart(response.data);
         console.log(response.data);
       } else if (timeFrame === "year") {
-        const response = await axios.get('http://127.0.0.1:5000/api/v1/readAllMonths');
+        const response = await axios.get('https://orm-pared-eolica.vercel.app/api/v1/readAllMonths');
         setYearChart(response.data);
         console.log(response.data);
       }

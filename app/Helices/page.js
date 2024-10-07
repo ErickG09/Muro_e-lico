@@ -32,7 +32,7 @@ async function getData() {
 
 async function getCurrentDay() {
   try {
-    const response = await fetch('http://127.0.0.1:5000/api/v1/getCurrentDay', {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getCurrentDay', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
