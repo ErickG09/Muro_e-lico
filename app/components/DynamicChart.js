@@ -28,35 +28,47 @@ export default function DynamicChart() {
   const [monthChart, setMonthChart] = useState([]);
   const [yearChart, setYearChart] = useState([]);
   const [formattedDate, setFormattedDate] = useState(""); // Almacena la fecha seleccionada en formato ISO
+  const [formattedDateOnly, setFormattedDateOnly] = useState(""); // Almacena la fecha seleccionada en formato "YYYY-MM-DD"
 
   // useEffect para obtener datos de la API cuando cambian el periodo de tiempo o la fecha
   useEffect(() => {
+
+    const formattedDate = new Date(selectedDate.getTime() - selectedDate.getTimezoneOffset() * 60000).toISOString().replace('T', ' ').substring(0, 19); // Formatea la fecha seleccionada a "YYYY-MM-DD HH:MM:SS" en UTC
+    setFormattedDate(formattedDate);
+
+    setFormattedDateOnly(formattedDate.split(' ')[0]); // Extrae solo la parte de la fecha 'YYYY-MM-DD'
+
+
     const fetchData = async () => {
       try {
         let response;
-        const formattedDate = selectedDate.toISOString(); // Formatea la fecha seleccionada a formato ISO
-        setFormattedDate(formattedDate);
+
 
         // Realiza la solicitud a la API según el periodo de tiempo seleccionado
         if (timeFrame === "hour") {
-          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/getAllMinutes?date=${formattedDate}`);
+          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/getAllMinutes?date=${encodeURIComponent(formattedDate)}`);
           setHourChart(response.data);
         } else if (timeFrame === "day") {
-          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/getAllHours?date=${formattedDate}`);
+            response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/getAllHours?date=${formattedDateOnly}`);
           setDayChart(response.data);
         } else if (timeFrame === "month") {
-          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/read30days?date=${formattedDate}`);
+          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/read30days?date=${formattedDateOnly}`);
           setMonthChart(response.data);
         } else if (timeFrame === "year") {
-          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/readAllMonths?date=${formattedDate}`);
+          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/readAllMonths?date=${formattedDateOnly}`);
           setYearChart(response.data);
         }
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
+
+
     };
 
     fetchData();
+    console.log(selectedDate)
+    console.log(formattedDate)
+
   }, [timeFrame, selectedDate]); // Ejecutar cada vez que cambie `timeFrame` o `selectedDate`
 
   // Función para obtener los datos correctos según el periodo de tiempo
@@ -183,7 +195,7 @@ export default function DynamicChart() {
             showTimeSelect // Mostrar las horas para la vista de "hour"
             showTimeSelectOnly={false}
             timeIntervals={60} // Mostrar solo horas completas
-            dateFormat="MMMM d, yyyy h:mm aa"
+            dateFormat="MM d, yyyy h:mm aa"
             popperPlacement="bottom-end" // Coloca el pop-up del calendario hacia abajo y a la derecha
             customInput={
               <Button borderRadius="md" border="1px" borderColor="gray.300" boxShadow="sm" bg="white" _hover={{ bg: "gray.100" }}>

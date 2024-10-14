@@ -208,7 +208,7 @@ export default function MainPage() {
     };
 
     // Set up an interval to delete data every 5 minutes
-    const intervalId = setInterval(deleteData, 300000);
+    const intervalId = setInterval(deleteData, 400000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);

@@ -15,8 +15,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function GeneratingTodayCard({todayData}) {
 
   // Datos de generación de hoy
-  const today = ((todayData?.propeller1 + todayData?.propeller2 + todayData?.propeller3 + todayData?.propeller4 + todayData?.propeller5) * 0.01).toFixed(4) || 0;
-
+  const today = ((todayData?.propeller1 + todayData?.propeller2 + todayData?.propeller3 + todayData?.propeller4 + todayData?.propeller5) * 0.01).toFixed(4);
 
   // Datos para el gráfico de dona
 
@@ -25,7 +24,7 @@ export default function GeneratingTodayCard({todayData}) {
     datasets: [
       {
         label: 'mW',
-        data: [today, today*0.2], // Datos de generación y pérdida
+        data: todayData ? [today, today*0.2] : [0,100], // Datos de generación y pérdida
         backgroundColor: ['#4A5568', '#CBD5E0'], // Colores neutros y minimalistas
         borderWidth: 0,
         hoverOffset: 4,
@@ -74,15 +73,18 @@ export default function GeneratingTodayCard({todayData}) {
         <Flex flexDirection="column" alignItems="flex-start" justifyContent="left">
           {/* Valor de mW */}
           <Flex alignItems="baseline" mb="1">
-            <Text fontSize="3xl" fontWeight="bold" mr="1">{today}</Text>
+            <Text fontSize="3xl" fontWeight="bold" mr="1">{todayData ? today : "0"}</Text>
             <Text fontSize="sm" color="gray.500">mW</Text> {/* Texto más pequeño y minimalista */}
           </Flex>
 
           {/* Eficiencia */}
-          <Flex alignItems="baseline">
-            <Text fontSize="3xl" fontWeight="bold" mr="1">80%</Text>
-            <Text fontSize="sm" color="gray.500">Efficiency</Text> {/* Texto más pequeño y minimalista */}
-          </Flex>
+          {todayData && (
+            <Flex alignItems="baseline">
+              <Text fontSize="3xl" fontWeight="bold" mr="1">80%</Text>
+              <Text fontSize="sm" color="gray.500">Efficiency</Text> {/* Texto más pequeño y minimalista */}
+            </Flex>
+          )}
+
         </Flex>
       </Flex>
     </Box>
