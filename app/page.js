@@ -181,8 +181,8 @@ export default function MainPage() {
     // Obtén los datos inmediatamente al montar el componente
     fetchData();
 
-    // Configura un intervalo para obtener datos cada 10 segundos
-    const intervalId = setInterval(fetchData, 10000);
+    // Configura un intervalo para obtener datos cada 1 minuto
+    const intervalId = setInterval(fetchData, 60000);
 
     // Limpia el intervalo cuando el componente se desmonte
     return () => clearInterval(intervalId);
