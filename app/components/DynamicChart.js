@@ -30,6 +30,7 @@ export default function DynamicChart() {
   const [formattedDate, setFormattedDate] = useState(""); // Almacena la fecha seleccionada en formato ISO
   const [formattedDateOnly, setFormattedDateOnly] = useState(""); // Almacena la fecha seleccionada en formato "YYYY-MM-DD"
 
+  const [hourOption, setHourOption] = useState("total"); // Controla la opción seleccionada para la vista de "hour"
   // useEffect para obtener datos de la API cuando cambian el periodo de tiempo o la fecha
   useEffect(() => {
 
@@ -104,7 +105,7 @@ export default function DynamicChart() {
   // Configuración de datos y opciones para la gráfica
   const chartData = {
     labels,
-    datasets: timeFrame === "hour" ? [
+    datasets: timeFrame === "hour" && hourOption === "average" ? [
       {
         label: "Propeller 1",
         data: hourChart ? Array.from({ length: 60 }, (_, i) => hourChart[i]?.propeller1 || 0) : [],
@@ -183,6 +184,22 @@ export default function DynamicChart() {
 
 
       // Añade más series según sea necesario
+    ] : timeFrame === "hour" && hourOption === "total" ? [
+      {
+        label: "mW Generated",
+        data: hourChart ? Array.from({ length: 60 }, (_, i) => hourChart[i]?.total || 0) : [],
+        borderColor: "#3182CE",
+        backgroundColor: "#90CDF4",
+        pointBackgroundColor: "#3182CE",
+        pointBorderColor: "#3182CE",
+        pointHoverBackgroundColor: "#3182CE",
+        pointHoverBorderColor: "#3182CE",
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        borderWidth: 2,
+        tension: 0.4,
+        fill: false,
+      },
     ] : [
       {
         label: "mW Generated",
@@ -252,6 +269,20 @@ export default function DynamicChart() {
             Selected Date: {selectedDate.toLocaleDateString()} {selectedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </Text>
         </Box>
+
+        { timeFrame === "hour" && (
+        <HStack>
+          <ButtonGroup size="sm" isAttached variant="outline">
+            <Button onClick={() => setHourOption("total")} isActive={hourOption === "total"}>
+              Total Data
+            </Button>
+            <Button onClick={() => setHourOption("average")} isActive={hourOption === "average"}>
+              Propeller Data
+            </Button>
+          </ButtonGroup>
+        </HStack>
+        )}
+
         {/* Contenedor de los botones de selección y el DatePicker */}
         <HStack>
           {/* Botones para seleccionar el periodo de tiempo */}
