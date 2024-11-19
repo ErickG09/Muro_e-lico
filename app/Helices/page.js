@@ -183,7 +183,7 @@ export default function Home() {
 
             <Flex direction="column" gap="4" width="25%"> 
               <OverviewCard title="Today" value={(dayTotalData?.total * 0.01).toFixed(4) || 'N/A'} unit="mW" />
-              <OverviewCard title="Now" value={((tempLatest1?.propeller1 + tempLatest1?.propeller2 + tempLatest1?.propeller3 + tempLatest1?.propeller4 + tempLatest1?.propeller5 + tempLatest2?.propeller1 + tempLatest2?.propeller2 + tempLatest2?.propeller3 + tempLatest2?.propeller4 + tempLatest2?.propeller5) * 0.01).toFixed(4)  || 'N/A'} unit="mW" />
+              <OverviewCard title="Now" value={(((tempLatest1?.propeller1 + tempLatest1?.propeller2 + tempLatest1?.propeller3 + tempLatest1?.propeller4 + tempLatest1?.propeller5 + tempLatest2?.propeller1 + tempLatest2?.propeller2 + tempLatest2?.propeller3 + tempLatest2?.propeller4 + tempLatest2?.propeller5) * 0.01).toFixed(4) ) || 'N/A'} unit="mW" />
             </Flex>
           </Flex>
         </Flex>
