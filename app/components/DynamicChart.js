@@ -253,6 +253,7 @@ export default function DynamicChart() {
           text: "mW Generated", // Título del eje Y
           color: "#4A5568",
         },
+        beginAtZero: true,
         grid: { display: false },
         ticks: { color: "#4A5568" },
       },

@@ -73,6 +73,7 @@ export default function EnergyChart({ isSidebarOpen, allHours }) {
         },
       },
       y: {
+        beginAtZero: true,
         grid: {
           display: false, // Oculta las líneas de cuadrícula en el eje y
         },
