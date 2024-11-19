@@ -5,27 +5,29 @@ import ButtonTest from './ButtonTest';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
-const slideIn = keyframes`
+const slideInFromLeft = keyframes`
   from {
     opacity: 0;
-    transform: translateX(20px); // Desplazamiento hacia la derecha al aparecer
+    transform: translateX(-100%);
   }
   to {
     opacity: 1;
-    transform: translateX(0); // Posición final
+    transform: translateX(0);
   }
 `;
 
-const slideOut = keyframes`
+const slideOutToRight = keyframes`
   from {
     opacity: 1;
     transform: translateX(0);
   }
   to {
     opacity: 0;
-    transform: translateX(-20px); // Desplazamiento hacia la izquierda al desaparecer
+    transform: translateX(100%);
   }
 `;
+
+
 
 const CardsContainer2 = ({ latestData, onToggle, isExiting }) => {
   const [loading, setLoading] = useState(true);
@@ -43,13 +45,8 @@ const CardsContainer2 = ({ latestData, onToggle, isExiting }) => {
       gap="20px" 
       height="45%"
       position="relative" 
-      animation={`${isExiting ? slideOut : slideIn} 0.5s ease-out`} // Animacíon
+      animation={`${isExiting ? slideOutToRight : slideInFromLeft} 0.5s ease-in-out`} // Animacíon
     >
-      {/* Botón de retroceso con flecha a la izquierda */}
-      <Box position="absolute" left="-30px" top="50%" transform="translateY(-50%)">
-        <ButtonTest onClick={onToggle} icon={<FaArrowLeft />} /> 
-      </Box>
-
       {/* La información del segundo grupo de hélices */}
 
       <PropellerCard title="Propeller 6" percentage={Math.floor((latestData?.propeller6 * 100) / 5) || 0} voltage={`${(latestData?.propeller6 * 0.01).toFixed(2) || 0} mW`} />

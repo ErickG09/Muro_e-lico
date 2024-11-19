@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react';
 import OverviewCard from '../components/OverviewCard';
 import CardsContainer2 from '../components/CardsContainer2';
 import ButtonTest from '../components/ButtonTest';
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
 
 async function getData() {
   try {
@@ -144,13 +146,28 @@ export default function Home() {
     <main>
       <ChakraProvider>
         <Flex direction="column" align="center" height="100vh" padding="20px">
-          <Flex width="90%" justify="space-between" align="center" marginBottom="30px">
+          <Flex width="90%" justify="space-between" align="center" marginBottom="20px">
             <Heading as="h3" size="lg" mb="4">Propellers Overview</Heading>
+            <Box>
+              <Flex alignItems="center" gap="8px">
+                <ButtonTest
+                  onClick={toggleContainer}
+                  icon={<FaArrowLeft />}
+                  isDisabled={showFirstContainer} // Deshabilitar si ya está en el grupo 1
+                  colorScheme={showFirstContainer ? "gray" : "blue"} // Cambia el color si está deshabilitado
+                />
+                <ButtonTest
+                  onClick={toggleContainer}
+                  icon={<FaArrowRight />}
+                  isDisabled={!showFirstContainer} // Deshabilitar si ya está en el grupo 2
+                  colorScheme={!showFirstContainer ? "gray" : "blue"} // Cambia el color si está deshabilitado
+                />
+              </Flex>
+            </Box>
           </Flex>
 
           {/* Esta sección es para cambiar el grupo de helices */}
-          {/* CardsContainer2 es para el segundo grupo de helices, duplique ese componente, solo para cambiar los valores de las 
-          nuevas hélices */}
+          
           {showFirstContainer ? (
             <CardsContainer latestData={tempLatest} onToggle={toggleContainer} isExiting={isExiting} />
           ) : (
