@@ -52,9 +52,9 @@ async function getCurrentDay() {
   }
 }
 
-async function getTempLatest(){
+async function getTempLatest(group){
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readTempLatest', {
+    const response = await fetch(`https://orm-pared-eolica.vercel.app/api/v1/readTempLatest/${group}`, {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -80,7 +80,8 @@ export default function Home() {
   
   const [data, setData] = useState(null);
   const [dayTotalData, setDayTotalData] = useState(null);
-  const [tempLatest, setTempLatest] = useState(null);
+  const [tempLatest1, setTempLatest1] = useState(null);
+  const [tempLatest2, setTempLatest2] = useState(null);
   const [showFirstContainer, setShowFirstContainer] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   useEffect(() => {
@@ -90,8 +91,10 @@ export default function Home() {
       const latestDay = await getCurrentDay();
       setData(latestData);
       setDayTotalData(latestDay);
-      const tempLatest = await getTempLatest();
-      setTempLatest(tempLatest);
+      const tempLatest1 = await getTempLatest(1);
+      setTempLatest1(tempLatest1);
+      const tempLatest2 = await getTempLatest(2)
+      setTempLatest2(tempLatest2)
     };
 
     // Obtén los datos inmediatamente al montar el componente
@@ -152,18 +155,18 @@ export default function Home() {
           {/* CardsContainer2 es para el segundo grupo de helices, duplique ese componente, solo para cambiar los valores de las 
           nuevas hélices */}
           {showFirstContainer ? (
-            <CardsContainer latestData={tempLatest} onToggle={toggleContainer} isExiting={isExiting} />
+            <CardsContainer latestData={tempLatest1} onToggle={toggleContainer} isExiting={isExiting} />
           ) : (
-            <CardsContainer2 latestData={tempLatest} onToggle={toggleContainer} isExiting={isExiting} />
+            <CardsContainer2 latestData={tempLatest2} onToggle={toggleContainer} isExiting={isExiting} />
           )}
 
 
           <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
-            <GroupChartContainer dayTotalData={dayTotalData} />
+            <GroupChartContainer dayTotalData={dayTotalData} temp1={tempLatest1} temp2={tempLatest2}/>
 
             <Flex direction="column" gap="4" width="25%"> 
               <OverviewCard title="Today" value={(dayTotalData?.total * 0.01).toFixed(4) || 'N/A'} unit="mW" />
-              <OverviewCard title="Now" value={((tempLatest?.propeller1 + tempLatest?.propeller2 + tempLatest?.propeller3 + tempLatest?.propeller4 + tempLatest?.propeller5) * 0.01).toFixed(4)  || 'N/A'} unit="mW" />
+              <OverviewCard title="Now" value={((tempLatest1?.propeller1 + tempLatest1?.propeller2 + tempLatest1?.propeller3 + tempLatest1?.propeller4 + tempLatest1?.propeller5 + tempLatest2?.propeller1 + tempLatest2?.propeller2 + tempLatest2?.propeller3 + tempLatest2?.propeller4 + tempLatest2?.propeller5) * 0.01).toFixed(4)  || 'N/A'} unit="mW" />
             </Flex>
           </Flex>
         </Flex>
