@@ -183,17 +183,17 @@ export default function DynamicChart() {
       },
 
 
-      // Añade más series según sea necesario
+      
     ] : timeFrame === "hour" && hourOption === "total" ? [
       {
         label: "mW Generated",
         data: hourChart ? Array.from({ length: 60 }, (_, i) => hourChart[i]?.total || 0) : [],
-        borderColor: "#3182CE",
+        borderColor: "#4A5568",
         backgroundColor: "#90CDF4",
-        pointBackgroundColor: "#3182CE",
-        pointBorderColor: "#3182CE",
-        pointHoverBackgroundColor: "#3182CE",
-        pointHoverBorderColor: "#3182CE",
+        pointBackgroundColor: "#4A5568",
+        pointBorderColor: "#4A5568",
+        pointHoverBackgroundColor: "#4A5568",
+        pointHoverBorderColor: "#4A5568",
         pointRadius: 4,
         pointHoverRadius: 6,
         borderWidth: 2,
@@ -204,12 +204,12 @@ export default function DynamicChart() {
       {
         label: "mW Generated",
         data,
-        borderColor: "#3182CE",
+        borderColor: "#4A5568",
         backgroundColor: "#90CDF4",
-        pointBackgroundColor: "#3182CE",
-        pointBorderColor: "#3182CE",
-        pointHoverBackgroundColor: "#3182CE",
-        pointHoverBorderColor: "#3182CE",
+        pointBackgroundColor: "#4A5568",
+        pointBorderColor: "#4A5568",
+        pointHoverBackgroundColor: "#4A5568",
+        pointHoverBorderColor: "#4A5568",
         pointRadius: 4,
         pointHoverRadius: 6,
         borderWidth: 2,
@@ -246,7 +246,7 @@ export default function DynamicChart() {
         },
         grid: { display: false },
         ticks: { color: "#4A5568" },
-      },
+      }, 
       y: {
         title: {
           display: true,

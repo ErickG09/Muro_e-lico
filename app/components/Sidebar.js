@@ -27,7 +27,7 @@ export default function Sidebar({ isOpen, onClose }) {
         {/* Título del Sidebar */}
         <Box>
           <Text fontSize="2xl" fontWeight="bold" color="gray.800">
-            Muro eólico
+          Wind wall
           </Text>
           <Text fontSize="md" color="gray.500">
             Ibero Puebla

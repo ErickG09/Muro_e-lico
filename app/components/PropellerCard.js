@@ -20,7 +20,7 @@ const PropellerCard = ({ title, percentage, voltage }) => {
       <CircularProgress value={percentage} color={progressColor} size="100px" marginBottom="25px">
         <CircularProgressLabel>{`${percentage}%`}</CircularProgressLabel>
       </CircularProgress>
-      <Text fontSize="sm">Voltaje: {voltage || '--'}</Text>
+      <Text fontSize="sm">Voltage: {voltage || '--'}</Text>
     </Box>
   );
 };

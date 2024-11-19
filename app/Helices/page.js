@@ -1,6 +1,6 @@
 
 'use client';
-import { ChakraProvider, Flex, Heading } from '@chakra-ui/react';
+import { ChakraProvider, Flex, Heading, Box } from '@chakra-ui/react';
 import Button from '../components/Button';
 import CardsContainer from "../components/CardsContainer";
 import MonthlyEnergyChart from "../components/MonthlyEnergyChart";
@@ -8,6 +8,8 @@ import GroupChartContainer from "../components/GroupChartContainer";
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import OverviewCard from '../components/OverviewCard';
+import CardsContainer2 from '../components/CardsContainer2';
+import ButtonTest from '../components/ButtonTest';
 
 async function getData() {
   try {
@@ -79,6 +81,8 @@ export default function Home() {
   const [data, setData] = useState(null);
   const [dayTotalData, setDayTotalData] = useState(null);
   const [tempLatest, setTempLatest] = useState(null);
+  const [showFirstContainer, setShowFirstContainer] = useState(true);
+  const [isExiting, setIsExiting] = useState(false);
   useEffect(() => {
     // Función para obtener y actualizar datos
     const fetchData = async () => {
@@ -126,6 +130,16 @@ export default function Home() {
     return () => clearInterval(intervalId);
   }, []);
 
+   // Función para alternar entre los dos contenedores
+   const toggleContainer = () => {
+    setIsExiting(true); // Inicia la animación de salida
+
+    setTimeout(() => {
+      setShowFirstContainer(!showFirstContainer); // Cambia el contenedor
+      setIsExiting(false); // Restablece la animación de entrada
+    }, 500); // La duración debe coincidir con la duración de la animación `fadeOut`
+  };
+
   return (
     <main>
       <ChakraProvider>
@@ -134,7 +148,15 @@ export default function Home() {
             <Heading as="h3" size="lg" mb="4">Propellers Overview</Heading>
           </Flex>
 
-          <CardsContainer latestData={tempLatest} />
+          {/* Esta sección es para cambiar el grupo de helices */}
+          {/* CardsContainer2 es para el segundo grupo de helices, duplique ese componente, solo para cambiar los valores de las 
+          nuevas hélices */}
+          {showFirstContainer ? (
+            <CardsContainer latestData={tempLatest} onToggle={toggleContainer} isExiting={isExiting} />
+          ) : (
+            <CardsContainer2 latestData={tempLatest} onToggle={toggleContainer} isExiting={isExiting} />
+          )}
+
 
           <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
             <GroupChartContainer dayTotalData={dayTotalData} />

@@ -2,15 +2,18 @@ import { Box, Flex, Text, Icon, Spacer, Center } from '@chakra-ui/react';
 
 const GroupLegend = ({dayTotalData}) => {
   const groups = [
-    { name: 'Grupo 1', turbines: 'Hélice 1, Hélice 2', color: '#FF6384' },
-    { name: 'Grupo 2', turbines: 'Hélice 3', color: '#FF9F40' },
-    { name: 'Grupo 3', turbines: 'Hélice 4, Hélice 5', color: '#36A2EB' },
+    { name: 'Group 1', turbines: 'Propeller 1, Propeller 2, Propeller 3, Propeller 4, Propeller5', color: '#36A2EB'},
+    { name: 'Group 2', turbines: 'Propeller 6, Propeller 7, Propeller 8, Propeller 9, Propeller10', color: '#FF9F40'}
+
+    // { name: 'Grupo 1', turbines: 'Hélice 1, Hélice 2', color: '#FF6384' },
+    // { name: 'Grupo 2', turbines: 'Hélice 3', color: '#FF9F40' },
+    // { name: 'Grupo 3', turbines: 'Hélice 4, Hélice 5', color: '#36A2EB' },
   ];
 
   return (
     <Box>
         <Text fontSize="md" as={'b'}>
-          Total Generado el día <br></br>
+         Total generated in the day <br></br>
           <Center>
             {dayTotalData?.date}
           </Center>

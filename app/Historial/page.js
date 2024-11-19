@@ -23,72 +23,6 @@ async function getAllWallData() {
   }
 }
 
-// Funcin para exportar los datos a Excel con formato
-async function exportToExcel() {
-  // Obtener los datos de la API
-  const jsonData = await getAllWallData();
-
-  if (jsonData.length === 0) {
-      alert("No hay datos para exportar.");
-      return;
-  }
-
-  // Crear un nuevo libro de trabajo con ExcelJS
-  const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet('Datos');
-
-  // Crear la fila de encabezado con estilos
-  const header = Object.keys(jsonData[0]);
-  const headerRow = worksheet.addRow(header);
-
-  // Aplicar estilos a la fila de encabezado
-  headerRow.eachCell((cell, colNumber) => {
-      cell.font = { bold: true };
-      cell.alignment = { vertical: 'middle', horizontal: 'center' };
-      cell.fill = {
-          type: 'pattern',
-          pattern: 'solid',
-          fgColor: { argb: 'D3D3D3' }  // Color gris claro
-      };
-      cell.border = {
-          top: { style: 'thin' },
-          left: { style: 'thin' },
-          bottom: { style: 'thin' },
-          right: { style: 'thin' }
-      };
-  });
-
-  // Aadir datos al worksheet y aplicar formato condicional a las filas con 'hour'
-  jsonData.forEach((item) => {
-      const row = worksheet.addRow(Object.values(item));
-
-      // Aplicar estilos de fondo gris claro si la fila corresponde a una hora especfica
-      if (item.hour) {
-          row.eachCell((cell) => {
-              cell.fill = {
-                  type: 'pattern',
-                  pattern: 'solid',
-                  fgColor: { argb: 'F0F0F0' }  // Color gris claro para las filas de horas
-              };
-          });
-      }
-  });
-
-  // Ajustar el ancho de las columnas segn el contenido
-  worksheet.columns.forEach(column => {
-      let maxLength = 0;
-      column.eachCell({ includeEmpty: true }, cell => {
-          maxLength = Math.max(maxLength, cell.value ? cell.value.toString().length : 0);
-      });
-      column.width = maxLength < 10 ? 10 : maxLength;
-  });
-
-  // Crear el archivo Excel y desencadenar la descarga
-  const buffer = await workbook.xlsx.writeBuffer();
-  const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  saveAs(blob, "datos_muroeolico.xlsx");
-}
-
 async function getData() {
   try {
     const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getTotal', {
@@ -198,6 +132,7 @@ export default function HistorialPage() {
   const [week, setWeek] = useState(null);
   const [currentDay, setCurrentDay] = useState(null);
   const [allHours, setAllHours] = useState(null);
+  const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
     // Función para obtener y actualizar datos
@@ -224,15 +159,88 @@ export default function HistorialPage() {
     return () => clearInterval(intervalId);
   }, []);
 
+  // FUNCIÓN PARA EXPORTAR LOS DATOS EN FORMATO EXCEL - AQUÍ INCIA LA FUNCIÓN
+  // Moví la función aquí abajo para darle un efecto al botón xd, arriba no me servía 
+  async function exportToExcel() {
+    setIsExporting(true);
+    // Obtener los datos de la API
+    const jsonData = await getAllWallData();
+
+    if (jsonData.length === 0) {
+        alert("No hay datos para exportar.");
+        setIsExporting(false); // Desactivar estado de carga si no hay datos
+        return;
+    }
+
+    // Crear un nuevo libro de trabajo con ExcelJS
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Datos');
+
+    // Crear la fila de encabezado con estilos
+    const header = Object.keys(jsonData[0]);
+    const headerRow = worksheet.addRow(header);
+
+    // Aplicar estilos a la fila de encabezado
+    headerRow.eachCell((cell, colNumber) => {
+        cell.font = { bold: true };
+        cell.alignment = { vertical: 'middle', horizontal: 'center' };
+        cell.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'D3D3D3' }  // Color gris claro
+        };
+        cell.border = {
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
+        };
+    });
+
+    // Aadir datos al worksheet y aplicar formato condicional a las filas con 'hour'
+    jsonData.forEach((item) => {
+        const row = worksheet.addRow(Object.values(item));
+
+        // Aplicar estilos de fondo gris claro si la fila corresponde a una hora especfica
+        if (item.hour) {
+            row.eachCell((cell) => {
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'F0F0F0' }  // Color gris claro para las filas de horas
+                };
+            });
+        }
+    });
+
+    // Ajustar el ancho de las columnas segn el contenido
+    worksheet.columns.forEach(column => {
+        let maxLength = 0;
+        column.eachCell({ includeEmpty: true }, cell => {
+            maxLength = Math.max(maxLength, cell.value ? cell.value.toString().length : 0);
+        });
+        column.width = maxLength < 10 ? 10 : maxLength;
+    });
+
+    // Crear el archivo Excel y desencadenar la descarga
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    saveAs(blob, "datos_muroeolico.xlsx");
+    setIsExporting(false);
+  }
+
+  // AQUÍ TERMINA LA FUNCIÓN PARA EXPORTAR LOS DATOS EN EXCEL
+
 
   return (
     <Box px="8" py="4" height="100vh" bg="#F8F9FA" position="relative">
       <Box position="absolute" top="16px" right="16px">
         <Button
           onClick={exportToExcel}
-
+          loading={isExporting} // Pasar el estado de carga al botón
+          loadingText="Loading"
         >
-          Export 
+          Export
         </Button>
       </Box>
 

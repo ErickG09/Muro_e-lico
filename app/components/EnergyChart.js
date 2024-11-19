@@ -57,28 +57,47 @@ export default function EnergyChart({ isSidebarOpen, allHours }) {
     }
   }, [isSidebarOpen, newData]);
 
-  const data = {
-    labels: displayLabels,
-    datasets: [
-      {
-        label: "mW Generados",
-        data: displayData,
-        borderColor: "#4A5568",
-        backgroundColor: "#CBD5E0",
-        pointBackgroundColor: "#4A5568",
-        pointBorderColor: "#4A5568",
-        borderWidth: 2,
-      },
-    ],
-  };
-
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
     },
+    scales: {
+      x: {
+        grid: {
+          display: false, // Oculta las líneas de cuadrícula en el eje x
+        },
+        ticks: {
+          color: "#4A5568", // Cambia el color de las etiquetas del eje x
+        },
+      },
+      y: {
+        grid: {
+          display: false, // Oculta las líneas de cuadrícula en el eje y
+        },
+        ticks: {
+          color: "#4A5568", // Cambia el color de las etiquetas del eje y
+        },
+      },
+    },
   };
+  
+  const data = {
+    labels: displayLabels,
+    datasets: [
+      {
+        label: "mW Generados",
+        data: displayData,
+        borderColor: "#4A5568", // Cambia el color de la línea
+        backgroundColor: "#4A5568", // Cambia el color del punto de fondo
+        pointBackgroundColor: "#4A5568", // Cambia el color de los puntos
+        pointBorderColor: "#4A5568", // Cambia el color del borde del punto
+        borderWidth: 2,
+      },
+    ],
+  };
+  
 
   return (
     <Box

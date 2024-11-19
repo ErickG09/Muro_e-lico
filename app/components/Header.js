@@ -1,22 +1,22 @@
 "use client";
-import { usePathname } from 'next/navigation'; // Importar el hook usePathname
-import { Flex, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink } from "@chakra-ui/react";
-import { FaHome } from "react-icons/fa";
+import { usePathname } from 'next/navigation';
+import { Flex, Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Icon } from "@chakra-ui/react";
+import { FaHome, FaWind, FaHistory } from "react-icons/fa"; // Importar los iconos necesarios
 
 export default function Header({ children }) {
-  const pathname = usePathname(); // Obtener la ruta actual
+  const pathname = usePathname();
 
-  // Determinar la página actual en base a la ruta
-  const getPageName = () => {
+  // Determinar el icono en base a la ruta
+  const getHomeIcon = () => {
     switch (pathname) {
       case "/":
-        return "Main";
+        return FaHome;
       case "/Helices":
-        return "Propellers";
+        return FaWind;
       case "/Historial":
-        return "History";
+        return FaHistory;
       default:
-        return "Main"; // Fallback por defecto a "Main"
+        return FaHome; // Fallback por defecto al icono de home
     }
   };
 
@@ -34,20 +34,25 @@ export default function Header({ children }) {
       position="fixed"
       top="0"
       left="0"
-      zIndex="1000" // Asegurar que esté encima del contenido
+      zIndex="1000"
     >
       {/* Contenido centrado del Header */}
       <Box>
         <Breadcrumb separator="/" fontSize="lg" color="gray.700">
           <BreadcrumbItem>
-            <BreadcrumbLink href="/"><FaHome /></BreadcrumbLink> {/* Ruta a la página principal */}
+            {/* Icono inicial que cambia según la página */}
+            <BreadcrumbLink href="/">
+              <Icon as={getHomeIcon()} mr="1" />
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem>
             <BreadcrumbLink href="#">Wind wall</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbItem isCurrentPage>
-            {/* Mostrar el nombre de la página actual */}
-            <BreadcrumbLink href="#">{getPageName()}</BreadcrumbLink>
+            {/* Solo el nombre de la página sin icono adicional */}
+            <BreadcrumbLink href="#">
+              {pathname === "/" ? "Main" : pathname.slice(1)}
+            </BreadcrumbLink>
           </BreadcrumbItem>
         </Breadcrumb>
       </Box>
