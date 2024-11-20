@@ -1,33 +1,53 @@
 'use client'
-import { Flex, Box, keyframes } from '@chakra-ui/react';
+import { Flex, Box, keyframes, Text } from '@chakra-ui/react';
 import PropellerCard from './PropellerCard';
 import ButtonTest from './ButtonTest';
 import { useEffect, useState } from 'react';
 
 // Definimos las animaciones de entrada y salida
-const slideInFromRight = keyframes`
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-`;
+// const slideInFromRight = keyframes`
+//   from {
+//     opacity: 0;
+//     transform: translateX(100%);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateX(0);
+//   }
+// `;
 
-const slideOutToLeft = keyframes`
+// const slideOutToLeft = keyframes`
+//   from {
+//     opacity: 1;
+//     transform: translateX(0);
+//   }
+//   to {
+//     opacity: 0;
+//     transform: translateX(-100%);
+//   }
+// `;
+
+const slideInFromLeft = keyframes`
   from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  to {
     opacity: 0;
     transform: translateX(-100%);
   }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 `;
 
-
+const slideOutToRight = keyframes`
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+`;
 
 const CardsContainer = ({ latestData, onToggle, isExiting }) => {
   const [loading, setLoading] = useState(true);
@@ -35,7 +55,7 @@ const CardsContainer = ({ latestData, onToggle, isExiting }) => {
 
   return (
     <Flex 
-      justify="space-between" 
+      direction="column" 
       align="center"
       marginBottom="20px" 
       backgroundColor="#E9ECEF" 
@@ -43,16 +63,24 @@ const CardsContainer = ({ latestData, onToggle, isExiting }) => {
       borderRadius="20px" 
       width="90%"
       gap="20px" 
-      height="45%"
-      position="relative" 
-      animation={`${isExiting ? slideOutToLeft : slideInFromRight} 0.5s ease-in-out`} // Cambia la animación según el estado `isExiting`
+      height="55%"
+      position="relative"
+      animation={`${isExiting ? slideOutToRight : slideInFromLeft} 0.5s ease-in-out`} // Animacíon
+
+      // animation={`${isExiting ? slideOutToLeft : slideInFromRight} 0.5s ease-in-out`} // Cambia la animación según el estado `isExiting`
     >
-      <PropellerCard title="Propeller 1" percentage={Math.floor((latestData?.propeller1 * 100) / 5) || 0} voltage={`${latestData?.propeller1 * 0.01.toFixed(2) || 0} mW`} />
-      <PropellerCard title="Propeller 2" percentage={Math.floor((latestData?.propeller2 * 100) / 5)|| 0} voltage={`${latestData?.propeller2 * 0.01.toFixed(2) || 0} mW`} />
-      <PropellerCard title="Propeller 3" percentage={Math.floor((latestData?.propeller3 * 100) / 5)|| 0} voltage={`${latestData?.propeller3 * 0.01.toFixed(2) || 0} mW`} />
-      <PropellerCard title="Propeller 4" percentage={Math.floor((latestData?.propeller4 * 100) / 5)|| 0} voltage={`${latestData?.propeller4 * 0.01.toFixed(2) || 0} mW`} />
-      <PropellerCard title="Propeller 5" percentage={Math.floor((latestData?.propeller5 * 100) / 5)|| 0} voltage={`${latestData?.propeller5 * 0.01.toFixed(2) || 0} mW`} />
-      
+      <Text fontSize="xl" fontWeight="bold" mb="10px">
+        Group 1
+      </Text>
+
+      {/* Contenedor de hélices */}
+      <Flex justify="space-between" align="center" width="100%" gap="20px">
+        <PropellerCard title="Propeller 1" percentage={Math.floor((latestData?.propeller1 * 100) / 5) || 0} voltage={`${latestData?.propeller1 * 0.01.toFixed(2) || 0} mW`} />
+        <PropellerCard title="Propeller 2" percentage={Math.floor((latestData?.propeller2 * 100) / 5)|| 0} voltage={`${latestData?.propeller2 * 0.01.toFixed(2) || 0} mW`} />
+        <PropellerCard title="Propeller 3" percentage={Math.floor((latestData?.propeller3 * 100) / 5)|| 0} voltage={`${latestData?.propeller3 * 0.01.toFixed(2) || 0} mW`} />
+        <PropellerCard title="Propeller 4" percentage={Math.floor((latestData?.propeller4 * 100) / 5)|| 0} voltage={`${latestData?.propeller4 * 0.01.toFixed(2) || 0} mW`} />
+        <PropellerCard title="Propeller 5" percentage={Math.floor((latestData?.propeller5 * 100) / 5)|| 0} voltage={`${latestData?.propeller5 * 0.01.toFixed(2) || 0} mW`} />
+      </Flex>
     </Flex>
   );
 };
