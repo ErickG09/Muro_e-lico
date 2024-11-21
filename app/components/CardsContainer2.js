@@ -67,6 +67,7 @@ const CardsContainer2 = ({ latestData, onToggle, isExiting }) => {
       position="relative" 
       animation={`${isExiting ? slideOutToLeft : slideInFromRight} 0.5s ease-in-out`} // Cambia la animación según el estado `isExiting`
 
+<<<<<<< HEAD
       // animation={`${isExiting ? slideOutToRight : slideInFromLeft} 0.5s ease-in-out`} // Animacíon
     >
       <Text fontSize="xl" fontWeight="bold" mb="10px">
@@ -80,6 +81,13 @@ const CardsContainer2 = ({ latestData, onToggle, isExiting }) => {
         <PropellerCard title="Propeller 9" percentage={Math.floor((latestData?.propeller9 * 100) / 5) || 0} voltage={`${(latestData?.propeller9 * 0.01).toFixed(2) || 0} mW`} />
         <PropellerCard title="Propeller 10" percentage={Math.floor((latestData?.propeller10 * 100) / 5) || 0} voltage={`${(latestData?.propeller10 * 0.01).toFixed(2) || 0} mW`} />
       </Flex>
+=======
+      <PropellerCard title="Propeller 6" percentage={Math.floor((latestData?.propeller1 * 100) / 5) || 0} voltage={`${(latestData?.propeller1 * 0.01).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 7" percentage={Math.floor((latestData?.propeller2 * 100) / 5) || 0} voltage={`${(latestData?.propeller2 * 0.01).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 8" percentage={Math.floor((latestData?.propeller3 * 100) / 5) || 0} voltage={`${(latestData?.propeller3 * 0.01).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 9" percentage={Math.floor((latestData?.propeller4 * 100) / 5) || 0} voltage={`${(latestData?.propeller4 * 0.01).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 10" percentage={Math.floor((latestData?.propeller5 * 100) / 5) || 0} voltage={`${(latestData?.propeller5 * 0.01).toFixed(2) || 0} mW`} />
+>>>>>>> fa818dc60b2650364f66185a54e18863f42fa81b
     </Flex>
   );
 };
