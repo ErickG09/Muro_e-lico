@@ -27,7 +27,7 @@ const fadeSlideOutToLeft = keyframes`
 const CardsContainer = ({ latestData, isExiting }) => {
   return (
     <Flex 
-      direction="column"
+      direction="row"
       align="center"
       marginBottom="20px" 
       backgroundColor="#E9ECEF" 
