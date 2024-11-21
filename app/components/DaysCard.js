@@ -2,7 +2,7 @@
 
 import { Box, Text, Flex, Progress, VStack } from "@chakra-ui/react";
 
-const maxValue = 20 * 0.01; // Valor máximo para las barras de progreso
+const maxValue = 20 ** 2/216 * 1000; // Valor máximo para las barras de progreso
 
 export default function DayProgress({ weekData }) {
   const data = weekData?.week_totals;
@@ -55,7 +55,7 @@ export default function DayProgress({ weekData }) {
               />
             </Box>
             <Text w="25%" textAlign="right" fontSize="sm" noOfLines={1}> 
-              {data.value.toFixed(4)} Watts
+              {data.value.toFixed(4)} mW
             </Text>
           </Flex>
         ))}

@@ -49,11 +49,11 @@ const CardsContainer2 = ({ latestData, onToggle, isExiting }) => {
     >
       {/* La información del segundo grupo de hélices */}
 
-      <PropellerCard title="Propeller 6" percentage={Math.floor((latestData?.propeller1 * 100) / 5) || 0} voltage={`${(latestData?.propeller1 * 0.01).toFixed(2) || 0} mW`} />
-      <PropellerCard title="Propeller 7" percentage={Math.floor((latestData?.propeller2 * 100) / 5) || 0} voltage={`${(latestData?.propeller2 * 0.01).toFixed(2) || 0} mW`} />
-      <PropellerCard title="Propeller 8" percentage={Math.floor((latestData?.propeller3 * 100) / 5) || 0} voltage={`${(latestData?.propeller3 * 0.01).toFixed(2) || 0} mW`} />
-      <PropellerCard title="Propeller 9" percentage={Math.floor((latestData?.propeller4 * 100) / 5) || 0} voltage={`${(latestData?.propeller4 * 0.01).toFixed(2) || 0} mW`} />
-      <PropellerCard title="Propeller 10" percentage={Math.floor((latestData?.propeller5 * 100) / 5) || 0} voltage={`${(latestData?.propeller5 * 0.01).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 6" percentage={Math.floor((latestData?.propeller1 * 100) / 5) || 0} voltage={`${(latestData?.propeller1 ** 2/216 * 1000).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 7" percentage={Math.floor((latestData?.propeller2 * 100) / 5) || 0} voltage={`${(latestData?.propeller2 ** 2/216 * 1000).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 8" percentage={Math.floor((latestData?.propeller3 * 100) / 5) || 0} voltage={`${(latestData?.propeller3 ** 2/216 * 1000).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 9" percentage={Math.floor((latestData?.propeller4 * 100) / 5) || 0} voltage={`${(latestData?.propeller4 ** 2/216 * 1000).toFixed(2) || 0} mW`} />
+      <PropellerCard title="Propeller 10" percentage={Math.floor((latestData?.propeller5 * 100) / 5) || 0} voltage={`${(latestData?.propeller5 ** 2/216 * 1000).toFixed(2) || 0} mW`} />
     </Flex>
   );
 };

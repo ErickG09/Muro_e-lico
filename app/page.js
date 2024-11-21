@@ -219,10 +219,10 @@ export default function MainPage() {
       <Box mb="8">
         <Heading as="h3" size="lg" mb="4">Overview</Heading>
         <SimpleGrid columns={{ base: 1, md: 4 }} spacing="4">
-          <OverviewCard bg="blue.50" title="Today" value={(currentDay?.total * 0.01).toFixed(4)} unit="mW" />
-          <OverviewCard title="This week" value={(week?.total_week * 0.01).toFixed(4)} unit="mW" bg="purple.50"/>
-          <OverviewCard title="This month" value={(currentMonth?.total * 0.01).toFixed(4)} unit="mW" bg="blue.50"/>
-          <OverviewCard title="All generated" value={(data?.total * 0.01).toFixed(4)} unit="mW" bg="purple.50"/>
+          <OverviewCard bg="blue.50" title="Today" value={(currentDay?.total ** 2/216 * 1000).toFixed(4)} unit="mW" />
+          <OverviewCard title="This week" value={(week?.total_week ** 2/216 * 1000).toFixed(4)} unit="mW" bg="purple.50"/>
+          <OverviewCard title="This month" value={(currentMonth?.total ** 2/216 * 1000).toFixed(4)} unit="mW" bg="blue.50"/>
+          <OverviewCard title="All generated" value={(data?.total ** 2/216 * 1000).toFixed(4)} unit="mW" bg="purple.50"/>
         </SimpleGrid>
       </Box>
 
