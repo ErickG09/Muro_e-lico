@@ -1,12 +1,11 @@
-'use client'
+'use client';
 import { Flex, keyframes, Text } from '@chakra-ui/react';
 import PropellerCard from './PropellerCard';
 
-// Nuevas animaciones
 const fadeSlideInFromRight = keyframes`
   from {
     opacity: 0;
-    transform: translateX(50%) scale(0.95);
+    transform: translateX(-50%) scale(0.95);
   }
   to {
     opacity: 1;
@@ -38,7 +37,9 @@ const CardsContainer = ({ latestData, isExiting }) => {
       gap="20px" 
       height="55%"
       position="relative" 
-      animation={`${isExiting ? fadeSlideOutToLeft : fadeSlideInFromRight} 0.6s ease-in-out`} // Nueva animación
+      animation={`${isExiting ? fadeSlideOutToLeft : fadeSlideInFromRight} 0.6s ease-in-out`}
+
+      
     >
       <Text fontSize="xl" fontWeight="bold" mb="10px">
         Group 1
