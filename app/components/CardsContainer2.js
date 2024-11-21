@@ -1,41 +1,34 @@
 'use client'
-import { Flex, Box, keyframes } from '@chakra-ui/react';
+import { Flex, keyframes, Text } from '@chakra-ui/react';
 import PropellerCard from './PropellerCard';
-import ButtonTest from './ButtonTest';
-import { FaArrowLeft } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
 
-const slideInFromLeft = keyframes`
+// Nuevas animaciones
+const fadeSlideInFromLeft = keyframes`
   from {
     opacity: 0;
-    transform: translateX(-100%);
+    transform: translateX(-50%) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
   }
 `;
 
-const slideOutToRight = keyframes`
+const fadeSlideOutToRight = keyframes`
   from {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
   }
   to {
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(50%) scale(0.95);
   }
 `;
 
-
-
-const CardsContainer2 = ({ latestData, onToggle, isExiting }) => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+const CardsContainer2 = ({ latestData, isExiting }) => {
   return (
     <Flex 
-      justify="space-between" 
+      direction="column"
       align="center"
       marginBottom="20px" 
       backgroundColor="#E9ECEF" 
@@ -43,9 +36,9 @@ const CardsContainer2 = ({ latestData, onToggle, isExiting }) => {
       borderRadius="20px" 
       width="90%"
       gap="20px" 
-      height="45%"
+      height="55%"
       position="relative" 
-      animation={`${isExiting ? slideOutToRight : slideInFromLeft} 0.5s ease-in-out`} // Animacíon
+      animation={`${isExiting ? fadeSlideOutToRight : fadeSlideInFromLeft} 0.6s ease-in-out`} // Nueva animación
     >
       {/* La información del segundo grupo de hélices */}
 
