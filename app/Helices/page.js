@@ -33,7 +33,26 @@ async function getData() {
     console.error('Error al obtener los datos:', error);
   }
 }
+async function getGroupsData() {
+  try {
+    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/get_totals', {
+      cache: 'no-cache',
+      headers: {
+        'Content-Type': 'application/json',
+        'cors': 'no-cors'
+      }
 
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error('Error al obtener los datos:', error);
+  }
+}
 async function getCurrentDay() {
   try {
     const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getCurrentDay', {
@@ -81,6 +100,7 @@ export default function Home() {
   // const dayTotalData = await getLatestDay();
   
   const [data, setData] = useState(null);
+  const [groups, setGroups] = useState(null);
   const [dayTotalData, setDayTotalData] = useState(null);
   const [tempLatest1, setTempLatest1] = useState(null);
   const [tempLatest2, setTempLatest2] = useState(null);
@@ -97,6 +117,8 @@ export default function Home() {
       setTempLatest1(tempLatest1);
       const tempLatest2 = await getTempLatest(2)
       setTempLatest2(tempLatest2)
+      const groups = await getGroupsData();
+      setGroups(groups);
     };
 
     // Obtén los datos inmediatamente al montar el componente
@@ -179,7 +201,7 @@ export default function Home() {
 
 
           <Flex width="90%" justify="space-between" alignItems="flex-start" marginTop="30px">
-            <GroupChartContainer dayTotalData={dayTotalData} temp1={tempLatest1} temp2={tempLatest2}/>
+            <GroupChartContainer dayTotalData={dayTotalData} groups={groups} temp1={tempLatest1} temp2={tempLatest2}/>
 
             <Flex direction="column" gap="4" width="25%"> 
               <OverviewCard title="Today" value={(dayTotalData?.total ** 2/216 * 1000).toFixed(4) || 'N/A'} unit="mW" />
