@@ -12,7 +12,6 @@ import {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const GroupPieChart = ({temp1, temp2}) => {
-
   const totalTemp1 = temp1?.propeller1 +temp1?.propeller2 + temp1?.propeller3 + temp1?.propeller4 + temp1?.propeller5;
   const totalTemp2 = temp2?.propeller1 +temp2?.propeller2 + temp2?.propeller3 + temp2?.propeller4 + temp2?.propeller5;
 
@@ -25,8 +24,8 @@ const GroupPieChart = ({temp1, temp2}) => {
       {
         label: 'Energia',
         data: dataValues, 
-        backgroundColor: ['#FF6384', '#FF9F40', '#36A2EB'],
-        hoverBackgroundColor: ['#FF6384', '#FF9F40', '#36A2EB'],
+        backgroundColor: ['#36A2EB'],
+        hoverBackgroundColor: ['#FF9F40'],
       },
     ],
   };
