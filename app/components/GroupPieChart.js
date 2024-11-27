@@ -11,12 +11,13 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const GroupPieChart = ({temp1, temp2}) => {
-  const totalTemp1 = temp1?.propeller1 +temp1?.propeller2 + temp1?.propeller3 + temp1?.propeller4 + temp1?.propeller5;
-  const totalTemp2 = temp2?.propeller1 +temp2?.propeller2 + temp2?.propeller3 + temp2?.propeller4 + temp2?.propeller5;
+const GroupPieChart = ({temp1, temp2, groups}) => {
+
+  const totalTemp1 = groups?.group1;
+  const totalTemp2 = groups?.group2;
 
   // Si dayTotalData no tiene valores definidos, usa valores por defecto
-  const dataValues = [totalTemp1 * 0.1 || 0, totalTemp2 * 0.1 || 0];
+  const dataValues = [totalTemp1 ** 2/216 * 1000 || 0, totalTemp2 ** 2/216 * 1000 || 0];
 
   const data = {
     labels: ['Grupo 1', 'Grupo 2'],
