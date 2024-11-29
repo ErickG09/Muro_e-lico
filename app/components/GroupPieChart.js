@@ -25,8 +25,9 @@ const GroupPieChart = ({temp1, temp2, groups}) => {
       {
         label: 'Energia',
         data: dataValues, 
-        backgroundColor: ['#FF6384', '#FF9F40', '#36A2EB'],
-        hoverBackgroundColor: ['#FF6384', '#FF9F40', '#36A2EB'],
+
+        backgroundColor: ['#36A2EB', '#FF9F40'],
+        // hoverBackgroundColor: ['#FF9F40'],
       },
     ],
   };
