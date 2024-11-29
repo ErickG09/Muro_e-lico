@@ -217,7 +217,7 @@ export default function MainPage() {
   return (
     <Box px="8" py="4" height="100vh" bg="#F8F9FA">
       <Box mb="8">
-        <Heading as="h3" size="lg" mb="4">Overview</Heading>
+        <Heading as="h3" size="lg" mb="4">Overview Info</Heading>
         <SimpleGrid columns={{ base: 1, md: 4 }} spacing="4">
           <OverviewCard bg="blue.50" title="Today" value={(currentDay?.total ** 2/216 * 1000).toFixed(4)} unit="mW" />
           <OverviewCard title="This week" value={(week?.total_week ** 2/216 * 1000).toFixed(4)} unit="mW" bg="purple.50"/>
