@@ -15,7 +15,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 async function getData() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readLatest', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/readLatest', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ async function getData() {
 }
 async function getGroupsData() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/get_totals', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/get_totals', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ async function getGroupsData() {
 }
 async function getCurrentDay() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getCurrentDay', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/getCurrentDay', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ async function getCurrentDay() {
 
 async function getTempLatest(group){
   try {
-    const response = await fetch(`https://orm-pared-eolica.vercel.app/api/v1/readTempLatest/${group}`, {
+    const response = await fetch(`https://api-muro-eolico.onrender.com/api/v1/readTempLatest/${group}`, {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ export default function Home() {
   useEffect(() => {
     const deleteData = async () => {
       try {
-        const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/resetTempWallData', {
+        const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/resetTempWallData', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',

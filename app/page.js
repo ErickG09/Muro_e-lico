@@ -10,7 +10,7 @@ import { set } from "mongoose";
 
 async function getData() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getTotal', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/getTotal', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ async function getData() {
 
 async function getCurrentMonth() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getCurrentMonth', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/getCurrentMonth', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ async function getCurrentMonth() {
 
 async function getWeek() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getWeek', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/getWeek', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ async function getWeek() {
 
 async function getCurrentDay() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getCurrentDay', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/getCurrentDay', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -91,7 +91,7 @@ async function getCurrentDay() {
 
 async function getAllHours() {
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/getAllHours', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/getAllHours', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ async function getAllHours() {
 
 async function getLatest(){
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readLatest', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/readLatest', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -131,7 +131,7 @@ async function getLatest(){
 
 async function getTempLatest(){
   try {
-    const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/readTempLatest', {
+    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/readTempLatest', {
       cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
@@ -191,7 +191,7 @@ export default function MainPage() {
   useEffect(() => {
     const deleteData = async () => {
       try {
-        const response = await fetch('https://orm-pared-eolica.vercel.app/api/v1/resetTempWallData', {
+        const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/resetTempWallData', {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
