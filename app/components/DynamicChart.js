@@ -47,16 +47,16 @@ export default function DynamicChart() {
 
         // Realiza la solicitud a la API según el periodo de tiempo seleccionado
         if (timeFrame === "hour") {
-          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/getAllMinutes?date=${encodeURIComponent(formattedDate)}`);
+          response = await axios.get(`https://api-muro-eolico.onrender.com/api/v1/getAllMinutes?date=${encodeURIComponent(formattedDate)}`);
           setHourChart(response.data);
         } else if (timeFrame === "day") {
-            response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/getAllHours?date=${formattedDateOnly}`);
+            response = await axios.get(`https://api-muro-eolico.onrender.com/api/v1/getAllHours?date=${formattedDateOnly}`);
           setDayChart(response.data);
         } else if (timeFrame === "month") {
-          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/read30days?date=${formattedDateOnly}`);
+          response = await axios.get(`https://api-muro-eolico.onrender.com/api/v1/read30days?date=${formattedDateOnly}`);
           setMonthChart(response.data);
         } else if (timeFrame === "year") {
-          response = await axios.get(`https://orm-pared-eolica.vercel.app/api/v1/readAllMonths?date=${formattedDateOnly}`);
+          response = await axios.get(`https://api-muro-eolico.onrender.com/api/v1/readAllMonths?date=${formattedDateOnly}`);
           setYearChart(response.data);
         }
       } catch (error) {

@@ -129,25 +129,50 @@ async function getLatest(){
   }
 }
 
-async function getTempLatest(){
-  try {
-    const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/readTempLatest', {
-      cache: 'no-cache',
-      headers: {
-        'Content-Type': 'application/json',
-        'cors': 'no-cors'
-      }
+// async function getTempLatest(){
+//   try {
+//     const response = await fetch('https://api-muro-eolico.onrender.com/api/v1/readTempLatest', {
+//       cache: 'no-cache',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'cors': 'no-cors'
+//       }
 
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    return data;
+//     });
+//     if (!response.ok) {
+//       throw new Error('Network response was not ok');
+//     }
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error('Error al obtener los datos:', error);
+//   }
+// }
+
+async function getTempLatest() {
+  try {
+    // Hacer dos peticiones en paralelo para los grupos 1 y 2
+    const [group1, group2] = await Promise.all([
+      fetch(`https://api-muro-eolico.onrender.com/api/v1/readTempLatest/1`, {
+        cache: 'no-cache',
+        headers: { 'Content-Type': 'application/json' }
+      }).then(res => res.ok ? res.json() : null),
+      
+      fetch(`https://api-muro-eolico.onrender.com/api/v1/readTempLatest/2`, {
+        cache: 'no-cache',
+        headers: { 'Content-Type': 'application/json' }
+      }).then(res => res.ok ? res.json() : null)
+    ]);
+
+    return { group1, group2 };
+
   } catch (error) {
-    console.error('Error al obtener los datos:', error);
+    console.error('Error al obtener los datos de los grupos:', error);
+    return { group1: null, group2: null };
   }
 }
+
+
 
 export default function MainPage() {
 
