@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Text, Link as ChakraLink, VStack, IconButton, Flex, Icon, Divider } from "@chakra-ui/react";
-import { FaHome, FaWind, FaHistory, FaTimes } from "react-icons/fa";
+import { FaHome, FaWind, FaHistory, FaTimes, FaBolt } from "react-icons/fa";
 import Link from 'next/link'; // Importar Link de Next.js para manejar la navegación
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -67,6 +67,11 @@ export default function Sidebar({ isOpen, onClose }) {
           <ChakraLink href="/Historial" display="flex" alignItems="center" onClick={onClose} py="2" w="full">
             <Icon as={FaHistory} mr="3" />
             History
+          </ChakraLink>
+
+          <ChakraLink href="/Actividad" display="flex" alignItems="center" onClick={onClose} py="2" w="full">
+            <Icon as={FaBolt} mr="3" />
+            Activity
           </ChakraLink>
 
         </VStack>
